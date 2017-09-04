@@ -4,7 +4,7 @@ include_HEADERS	= caq.h
 
 libcaq_la_CFLAGS = -Wextra -pedantic -ansi
 
-bin_PROGRAMS = caq-test laden
+bin_PROGRAMS = caq-test
 caq_test_SOURCES = caq-test.c
 caq_test_LDADD = libcaq.la
 
