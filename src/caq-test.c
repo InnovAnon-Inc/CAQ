@@ -14,11 +14,15 @@ int main() {
    alloc_queue (&q, sizeof (int), N);
 
    dumpq(&q, 1);
-   enqueue(&q, arr + 0);dumpq(&q, 2);
-   enqueue(&q, arr + 1);dumpq(&q, 3);
-   enqueue(&q, arr + 2);dumpq(&q, 4);
-   enqueue(&q, arr + 3);dumpq(&q, 5);
-   enqueue(&q, arr + 4);dumpq(&q, 6);
+   *enqueue(&q) = arr[0];dumpq(&q, 2);
+   *enqueue(&q) = arr[1];dumpq(&q, 3);
+   *enqueue(&q) = arr[2];dumpq(&q, 4);
+   tmp = enqueue(&q);
+   if (tmp != NULL) *tmp = arr[3];
+   dumpq(&q, 5);
+   tmp = enqueue(&q);
+   if (tmp != NULL) *tmp= arr[4];
+   dumpq(&q, 6);
    memset (arr, 0, sizeof (arr));
    printf("%i\n", *(int *) dequeue(&q));
       dumpq(&q, 7);
