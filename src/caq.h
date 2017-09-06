@@ -19,7 +19,7 @@ void free_queue (caq_t *q) ;
 /* ret type == elem type */
 void *dequeue (caq_t *q) ;
 /* returns err code */
-int enqueue (caq_t *q, void *e) ;
+void *enqueue (caq_t *q) ;
 bool isempty (caq_t *q) ;
 bool isfull (caq_t *q) ;
 void *gethead (caq_t *q) ;

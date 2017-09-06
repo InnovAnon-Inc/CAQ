@@ -31,12 +31,16 @@ void free_queue (caq_t *q) {
 	free (q->Q);
 }
 
-int enqueue (caq_t *q, void *x) {
-	puts ("enqueue ()");
-   if (isfull (q)) return -1;
-   memcpy (q->Q + q->esz * q->tail, x, q->esz);
+void *enqueue (caq_t *q) {
+	/*puts ("enqueue ()");*/
+   void *ret;
+   if (isfull (q)) /*return -1;*/
+      return NULL;
+   /*memcpy (q->Q + q->esz * q->tail, x, q->esz);*/
+   ret = q->Q + q->esz * q->tail;
    q->tail = (q->tail + 1) % q->n;
-   return 0;
+   /*return 0;*/
+   return ret;
 }
 
 void *dequeue (caq_t *q) {
