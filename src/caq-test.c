@@ -6,12 +6,12 @@
 
 #define N (4)
 
-int main() {
+int main(void) {
    int arr[] = {101, 202, 303, 404, 505};
    int *tmp;
 
    caq_t q;
-   alloc_queue (&q, sizeof (int), N);
+   alloc_queue (&q, sizeof (int), (size_t) N);
 
    dumpq(&q, 1);
    *(int*)enqueue(&q) = arr[0];dumpq(&q, 2);
