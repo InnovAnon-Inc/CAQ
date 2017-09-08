@@ -1,6 +1,10 @@
 #ifndef _CAQ_H_
 #define _CAQ_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 #include <sys/types.h>
 
@@ -24,5 +28,9 @@ bool isempty (caq_t *q) ;
 bool isfull (caq_t *q) ;
 void *gethead (caq_t *q) ;
 void dumpq(caq_t *q, int i) ;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CAQ_H_ */
