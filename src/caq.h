@@ -28,7 +28,8 @@ bool isempty (caq_t *q)
 __attribute__ ((pure)) ;
 bool isfull (caq_t *q)
 __attribute__ ((pure)) ;
-void *gethead (caq_t *q) ;
+void *gethead (caq_t *q)
+__attribute__ ((pure)) ;
 void dumpq(caq_t *q, int i) ;
 
 #ifdef __cplusplus

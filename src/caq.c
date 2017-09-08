@@ -61,6 +61,7 @@ bool isfull (caq_t *q) {
    return q->head == (q->tail + 1) % q->n;
 }
 
+__attribute__ ((pure))
 void *gethead(caq_t *q) {
    if (isempty (q)) return NULL;
    return (void *) ((char *) q->Q + q->esz * q->head);
