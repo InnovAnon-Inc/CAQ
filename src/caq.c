@@ -37,7 +37,7 @@ void *enqueue (caq_t *q) {
    if (isfull (q)) /*return -1;*/
       return NULL;
    /*memcpy (q->Q + q->esz * q->tail, x, q->esz);*/
-   ret = q->Q + q->esz * q->tail;
+   ret = (void *) ((char *) q->Q + q->esz * q->tail);
    q->tail = (q->tail + 1) % q->n;
    /*return 0;*/
    return ret;
@@ -46,7 +46,7 @@ void *enqueue (caq_t *q) {
 void *dequeue (caq_t *q) {
    void *x;
    if (isempty (q)) return NULL;
-   x = q->Q + q->esz * q->head;
+   x = (void *) ((char *) q->Q + q->esz * q->head);
    q->head = (q->head + 1) % q->n;
    return x;
 }
@@ -61,7 +61,7 @@ bool isfull (caq_t *q) {
 
 void *gethead(caq_t *q) {
    if (isempty (q)) return NULL;
-   return q->Q + q->esz * q->head;
+   return (void *) ((char *) q->Q + q->esz * q->head);
 }
 
 
