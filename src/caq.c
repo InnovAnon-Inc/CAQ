@@ -51,10 +51,12 @@ void *dequeue (caq_t *q) {
    return x;
 }
 
+__attribute__ ((pure))
 bool isempty (caq_t *q) {
    return q->head == q->tail;
 }
 
+__attribute__ ((pure))
 bool isfull (caq_t *q) {
    return q->head == (q->tail + 1) % q->n;
 }

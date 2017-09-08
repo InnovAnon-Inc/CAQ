@@ -24,8 +24,10 @@ void free_queue (caq_t *q) ;
 void *dequeue (caq_t *q) ;
 /* returns err code */
 void *enqueue (caq_t *q) ;
-bool isempty (caq_t *q) ;
-bool isfull (caq_t *q) ;
+bool isempty (caq_t *q)
+__attribute__ ((pure)) ;
+bool isfull (caq_t *q)
+__attribute__ ((pure)) ;
 void *gethead (caq_t *q) ;
 void dumpq(caq_t *q, int i) ;
 
