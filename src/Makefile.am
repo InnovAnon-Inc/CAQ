@@ -8,4 +8,4 @@ bin_PROGRAMS = caq-test
 caq_test_SOURCES = caq-test.c
 caq_test_LDADD = libcaq.la
 
-caq_test_CFLAGS = -Wextra -pedantic -ansi -Wconversion -Winit-self -Wold-style-cast -Woverloaded-virtual -Wuninitialized -Wmissing-declarations -Winit-self -Wcast-qual  -Wsign-promo -Wcast-align -Wstrict-null-sentinel -Wstrict-overflow
+caq_test_CFLAGS = -Wextra -pedantic -ansi -Wconversion -Winit-self -Wuninitialized -Wmissing-declarations -Winit-self -Wcast-qual -Wcast-align -Wstrict-overflow
