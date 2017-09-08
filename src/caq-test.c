@@ -17,7 +17,9 @@ int main(void) {
    *(int*)enqueue(&q) = arr[0];dumpq(&q, 2);
    *(int*)enqueue(&q) = arr[1];dumpq(&q, 3);
    *(int*)enqueue(&q) = arr[2];dumpq(&q, 4);
-   *(int*)enqueue(&q) = arr[3];dumpq(&q, 5);
+   tmp = enqueue(&q);
+   if (tmp != NULL) *tmp = arr[3];
+   dumpq(&q, 5);
    tmp = enqueue(&q);
    if (tmp != NULL) *tmp= arr[4];
    dumpq(&q, 6);
