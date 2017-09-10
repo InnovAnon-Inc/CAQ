@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "caq.h"
@@ -12,7 +12,11 @@ int head = 0;
 int tail = 0;
 */
 
-void init_queue (caq_t *q, void *arr, size_t esz, size_t n) {
+__attribute__ ((nonnull (1, 2), nothrow))
+void init_queue (
+   caq_t *restrict q,
+   void *restrict arr,
+   size_t esz, size_t n) {
 	q->Q = arr;
 	q->esz = esz;
 	q->n = n;
