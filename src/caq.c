@@ -40,7 +40,7 @@ void free_queue (caq_t *restrict q) {
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-void *restrict enqueue (caq_t *restrict q) {
+void *enqueue (caq_t *restrict q) {
 	/*puts ("enqueue ()");*/
    void *ret;
    error_check (isfull (q) != false) /*return -1;*/
@@ -53,7 +53,7 @@ void *restrict enqueue (caq_t *restrict q) {
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-void *restrict dequeue (caq_t *restrict q) {
+void *dequeue (caq_t *restrict q) {
    void *x;
    error_check (isempty (q) != false) return NULL;
    x = (void *) ((char *) q->Q + q->esz * q->head);
@@ -72,7 +72,7 @@ bool isfull (caq_t const *restrict q) {
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
-void *restrict gethead(caq_t const *restrict q) {
+void *gethead(caq_t const *restrict q) {
    error_check (isempty (q) != false) return NULL;
    return (void *) ((char *) q->Q + q->esz * q->head);
 }
