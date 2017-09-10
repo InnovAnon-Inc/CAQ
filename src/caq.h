@@ -30,16 +30,16 @@ void free_queue (caq_t *restrict q)
 __attribute__ ((nonnull (1), nothrow)) ;
 
 /* ret type == elem type */
-void *dequeue (caq_t *restrict q)
+void *restrict dequeue (caq_t *restrict q)
 __attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 /* returns err code */
-void *enqueue (caq_t *restrict q)
+void *restrict enqueue (caq_t *restrict q)
 __attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 bool isempty (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 bool isfull (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
-void *gethead (caq_t const *restrict q)
+void *restrict gethead (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 void dumpq(caq_t const *restrict q, int i)
 __attribute__ ((nonnull (1), nothrow)) ;
