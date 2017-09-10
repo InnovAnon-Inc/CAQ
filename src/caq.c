@@ -39,7 +39,7 @@ void free_queue (caq_t *restrict q) {
 	free (q->Q);
 }
 
-__attribute__ ((nonull (1), nothrow, warn_unused_result))
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *enqueue (caq_t *restrict q) {
 	/*puts ("enqueue ()");*/
    void *ret;
@@ -52,7 +52,7 @@ void *enqueue (caq_t *restrict q) {
    return ret;
 }
 
-__attribute__ ((nonull (1), nothrow, warn_unused_result))
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *dequeue (caq_t *restrict q) {
    void *x;
    if (isempty (q)) return NULL;

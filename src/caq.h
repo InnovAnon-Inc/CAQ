@@ -31,10 +31,10 @@ __attribute__ ((nonnull (1), nothrow)) ;
 
 /* ret type == elem type */
 void *dequeue (caq_t *restrict q)
-__attribute__ ((nonull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 /* returns err code */
 void *enqueue (caq_t *restrict q)
-__attribute__ ((nonull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 bool isempty (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 bool isfull (caq_t const *restrict q)
