@@ -29,7 +29,7 @@ int alloc_queue (
    caq_t *restrict q,
    size_t esz, size_t n) {
 	void *arr = malloc (n * esz);
-	if (arr == NULL) return -1;
+	error_check (arr == NULL) return -1;
 	init_queue (q, arr, esz, n);
 	return 0;
 }
@@ -43,7 +43,7 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *enqueue (caq_t *restrict q) {
 	/*puts ("enqueue ()");*/
    void *ret;
-   if (isfull (q)) /*return -1;*/
+   error_check (isfull (q)) /*return -1;*/
       return NULL;
    /*memcpy (q->Q + q->esz * q->tail, x, q->esz);*/
    ret = (void *) ((char *) q->Q + q->esz * q->tail);
@@ -55,7 +55,7 @@ void *enqueue (caq_t *restrict q) {
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *dequeue (caq_t *restrict q) {
    void *x;
-   if (isempty (q)) return NULL;
+   error_check (isempty (q)) return NULL;
    x = (void *) ((char *) q->Q + q->esz * q->head);
    q->head = (q->head + 1) % q->n;
    return x;
@@ -73,7 +73,7 @@ bool isfull (caq_t const *restrict q) {
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
 void *gethead(caq_t const *restrict q) {
-   if (isempty (q)) return NULL;
+   error_check (isempty (q)) return NULL;
    return (void *) ((char *) q->Q + q->esz * q->head);
 }
 

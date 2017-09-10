@@ -11,7 +11,8 @@ int main(void) {
    int *tmp;
 
    caq_t q;
-   alloc_queue (&q, sizeof (int), (size_t) N);
+   error_check (alloc_queue (&q, sizeof (int), (size_t) N) != 0)
+      return EXIT_FAILURE;
 
    dumpq(&q, 1);
    *(int*)enqueue(&q) = arr[0];dumpq(&q, 2);
