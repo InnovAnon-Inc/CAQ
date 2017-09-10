@@ -24,18 +24,23 @@ void init_queue (
 	q->tail = 0;
 }
 
-int alloc_queue (caq_t *q, size_t esz, size_t n) {
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
+int alloc_queue (
+   caq_t *restrict q,
+   size_t esz, size_t n) {
 	void *arr = malloc (n * esz);
 	if (arr == NULL) return -1;
 	init_queue (q, arr, esz, n);
 	return 0;
 }
 
-void free_queue (caq_t *q) {
+__attribute__ ((nonnull (1), nothrow))
+void free_queue (caq_t *restrict q) {
 	free (q->Q);
 }
 
-void *enqueue (caq_t *q) {
+__attribute__ ((nonull (1), nothrow, warn_unused_result))
+void *enqueue (caq_t *restrict q) {
 	/*puts ("enqueue ()");*/
    void *ret;
    if (isfull (q)) /*return -1;*/
@@ -47,7 +52,8 @@ void *enqueue (caq_t *q) {
    return ret;
 }
 
-void *dequeue (caq_t *q) {
+__attribute__ ((nonull (1), nothrow, warn_unused_result))
+void *dequeue (caq_t *restrict q) {
    void *x;
    if (isempty (q)) return NULL;
    x = (void *) ((char *) q->Q + q->esz * q->head);
@@ -55,24 +61,24 @@ void *dequeue (caq_t *q) {
    return x;
 }
 
-__attribute__ ((pure))
-bool isempty (caq_t *q) {
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
+bool isempty (caq_t const *restrict q) {
    return q->head == q->tail;
 }
 
-__attribute__ ((pure))
-bool isfull (caq_t *q) {
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
+bool isfull (caq_t const *restrict q) {
    return q->head == (q->tail + 1) % q->n;
 }
 
-__attribute__ ((pure))
-void *gethead(caq_t *q) {
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
+void *gethead(caq_t const *restrict q) {
    if (isempty (q)) return NULL;
    return (void *) ((char *) q->Q + q->esz * q->head);
 }
 
-
-void dumpq(caq_t *q, int i) {
+__attribute__ ((nonnull (1), nothrow))
+void dumpq(caq_t const *restrict q, int i) {
    void *head = gethead (q);
    printf("i:%i, head:%i,", i, (int) q->head);
    if (head == NULL)
