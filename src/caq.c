@@ -21,7 +21,7 @@ void init_queue (caq_t *q, void *arr, size_t esz, size_t n) {
 }
 
 int alloc_queue (caq_t *q, size_t esz, size_t n) {
-	int *arr = malloc (n * esz);
+	void *arr = malloc (n * esz);
 	if (arr == NULL) return -1;
 	init_queue (q, arr, esz, n);
 	return 0;
