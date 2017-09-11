@@ -1,8 +1,12 @@
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "caq.h"
+#include <caq.h>
 
 /*#define n (4)*/
 
