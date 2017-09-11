@@ -1,3 +1,6 @@
 [submodule "m4-common"]
 	path = m4-common
 	url = https://github.com/InnovAnon-Inc/m4-common.git
+[submodule "m4"]
+	path = m4
+	url = https://github.com/InnovAnon-Inc/m4-common.git
