@@ -9,9 +9,12 @@ AC_CONFIG_FILES([
  src/Makefile
 ])
 AC_CONFIG_MACRO_DIR([m4])
-AC_OUTPUT
 
 AC_CHECK_HEADERS([stdio.h stdlib.h string.h sys/types.h])
 AC_CHECK_HEADERS([glitter.h])
 
 AC_CHECK_LIB([stdlib],[malloc])
+
+INNOVANON_WARNINGS([])
+
+AC_OUTPUT
