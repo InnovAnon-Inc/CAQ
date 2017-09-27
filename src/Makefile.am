@@ -8,4 +8,5 @@ caq_test_SOURCES = caq-test.c
 caq_test_LDADD = libcaq.la
 #caq_test_CFLAGS =
 
-AM_CPPFLAGS += -D__STDC_INT64__
+AM_CPPFLAGS = -D__STDC_INT64__
+AM_CPPFLAGS += -I $(srcdir)/glitter/src
