@@ -9,14 +9,14 @@ AC_CONFIG_FILES([
  src/Makefile
 ])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_SUBDIRS([glitter array])
+AC_CONFIG_SUBDIRS([glitter Array])
 
 AC_CHECK_HEADERS([stdio.h stdlib.h string.h sys/types.h])
 AC_CHECK_HEADERS([array.h])
 AC_CHECK_HEADERS([glitter.h])
 
-AC_CHECK_LIB([stdlib],[malloc,free])
-AC_CHECK_LIB([array],[init_array,init_array2,free_array])
+#AC_CHECK_LIB([stdlib],[malloc,free])
+AC_CHECK_LIB([array],[init_array,free_array])
 AC_CHECK_LIB([array],[get_array,set_array,index_array])
 #AC_CHECK_LIB([array],[gets_array,sets_array,index_array])
 
