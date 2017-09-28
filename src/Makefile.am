@@ -6,7 +6,7 @@ include_HEADERS	= caq.h
 
 bin_PROGRAMS = caq-test
 caq_test_SOURCES = caq-test.c
-caq_test_LDADD = libcaq.la -larray
+caq_test_LDADD = libcaq.la -larray -lswap
 #caq_test_CFLAGS =
 
 AM_CPPFLAGS = -D__STDC_INT64__
