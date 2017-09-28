@@ -8,11 +8,10 @@ extern "C" {
 #include <sys/types.h>
 
 #include <glitter.h>
+#include <array.h>
 
 typedef struct {
-	void *restrict Q;
-	size_t esz;
-	size_t n;
+	array_t array;
 	size_t head;
 	size_t tail;
 } caq_t;
@@ -25,7 +24,7 @@ __attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
 int alloc_queue (
 	caq_t *restrict q,
 	size_t esz, size_t n)
-__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
 void free_queue (caq_t *restrict q)
 __attribute__ ((leaf, nonnull (1), nothrow)) ;
 

@@ -8,60 +8,51 @@
 
 #include <caq.h>
 
-/*#define n (4)*/
-
-/*
-int Q[n];
-int head = 0;
-int tail = 0;
-*/
-
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
 void init_queue (
    caq_t *restrict q,
-   void *restrict arr,
+   void *restrict data,
    size_t esz, size_t n) {
-   q->Q = arr;
-   q->esz = esz;
-   q->n = n;
+   init_array (&(q->array), data, esz, n);
    q->head = 0;
    q->tail = 0;
 }
 
-__attribute__ ((nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int alloc_queue (
    caq_t *restrict q,
    size_t esz, size_t n) {
-   void *arr = malloc (n * esz);
-   error_check (arr == NULL) return -1;
-   init_queue (q, arr, esz, n);
+   error_check (alloc_array (&(q->array), esz, n) != 0) return -1;
+   q->head = 0;
+   q->tail = 0;
    return 0;
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow))
 void free_queue (caq_t *restrict q) {
-      free (q->Q);
+   free_array (&(q->array));
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *enqueue (caq_t *restrict q) {
 	/*puts ("enqueue ()");*/
-   void *ret;
+   void *restrict ret;
+   TODO (why do error checking ?)
    error_check (isfull (q) != false) /*return -1;*/
       return NULL;
    /*memcpy (q->Q + q->esz * q->tail, x, q->esz);*/
-   ret = (void *) ((char *) q->Q + q->esz * q->tail);
-   q->tail = (q->tail + 1) % q->n;
+   ret = index_array (&(q->array), q->tail);
+   q->tail = (q->tail + 1) % q->array.n;
    /*return 0;*/
    return ret;
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 void *dequeue (caq_t *restrict q) {
-   void *x;
+   void *restrict x;
    error_check (isempty (q) != false) return NULL;
-   x = (void *) ((char *) q->Q + q->esz * q->head);
-   q->head = (q->head + 1) % q->n;
+   x = index_array (&(q->array), q->head);
+   q->head = (q->head + 1) % q->array.n;
    return x;
 }
 
@@ -72,13 +63,13 @@ bool isempty (caq_t const *restrict q) {
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
 bool isfull (caq_t const *restrict q) {
-   return q->head == (q->tail + 1) % q->n;
+   return q->head == (q->tail + 1) % q->array.n;
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
 void *gethead(caq_t const *restrict q) {
    error_check (isempty (q) != false) return NULL;
-   return (void *) ((char *) q->Q + q->esz * q->head);
+   return index_array (&(q->array), q->head);
 }
 
 __attribute__ ((nonnull (1), nothrow))
