@@ -11,4 +11,4 @@ caq_test_LDADD = libcaq.la libarray.la
 
 AM_CPPFLAGS = -D__STDC_INT64__
 AM_CPPFLAGS += -I $(srcdir)/../glitter/src
-AM_CPPFLAGS += -I $(srcdir)/../array/src
+AM_CPPFLAGS += -I $(srcdir)/../Array/src
