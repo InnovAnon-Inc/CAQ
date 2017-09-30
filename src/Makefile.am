@@ -6,7 +6,7 @@ AM_CPPFLAGS += -I $(top_srcdir)/glitter/src
 SUBDIRS += ../Array
 AM_CPPFLAGS += -I $(top_srcdir)/Array/src
 
-LIBCAQ_LIBADD = ../Array/src/.libs/libarray.la $(LIBARRAY_LIBADD)
+include Makefile-LIBADD.inc
 
 lib_LTLIBRARIES = libcaq.la
 libcaq_la_LIBADD = $(LIBCAQ_LIBADD)
