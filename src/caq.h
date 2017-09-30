@@ -25,7 +25,7 @@ int alloc_queue (
 	caq_t *restrict q,
 	size_t esz, size_t n)
 __attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
-void free_queue (caq_t *restrict q)
+void free_queue (caq_t const *restrict q)
 __attribute__ ((leaf, nonnull (1), nothrow)) ;
 
 /* ret type == elem type */

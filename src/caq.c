@@ -29,7 +29,7 @@ int alloc_queue (
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow))
-void free_queue (caq_t *restrict q) {
+void free_queue (caq_t const *restrict q) {
    free_array (&(q->array));
 }
 
