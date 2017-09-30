@@ -1,14 +1,16 @@
+LIBCAQ_LIBADD = ../Array/src/.libs/libarray.la $(LIBARRAY_LIBADD)
+
 lib_LTLIBRARIES = libcaq.la
-libcaq_la_LIBADD = -larray
-libcaq_la_SOURCES = caq.c
-include_HEADERS	= caq.h
-#libcaq_la_CFLAGS =
+libcaq_la_LIBADD = $(LIBCAQ_LIBADD)
+include_HEADERS = caq.h
 
 bin_PROGRAMS = caq-test
-caq_test_SOURCES = caq-test.c
-caq_test_LDADD = libcaq.la -larray -lswap
-#caq_test_CFLAGS =
+caq_test_LDADD = libcaq.la $(LIBCAQ_LIBADD)
 
 AM_CPPFLAGS = -D__STDC_INT64__
-AM_CPPFLAGS += -I $(srcdir)/../glitter/src
-AM_CPPFLAGS += -I $(srcdir)/../Array/src
+
+SUBDIRS = ../glitter
+AM_CPPFLAGS += -I ../glitter/src
+
+SUBDIRS += ../Array
+AM_CPPFLAGS += -I ../Array/src
