@@ -1,10 +1,10 @@
 AM_CPPFLAGS = -D__STDC_INT64__
 
 SUBDIRS = ../glitter
-AM_CPPFLAGS += -I ../glitter/src
+AM_CPPFLAGS += -I $(top_srcdir)/glitter/src
 
 SUBDIRS += ../Array
-AM_CPPFLAGS += -I ../Array/src
+AM_CPPFLAGS += -I $(top_srcdir)/Array/src
 
 LIBCAQ_LIBADD = ../Array/src/.libs/libarray.la $(LIBARRAY_LIBADD)
 
