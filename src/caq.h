@@ -60,13 +60,8 @@ __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_r
 void *gettail_chk (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 
-TODO (isfull, isempty)
-TODO (size_t remaining_caq())
 TODO (enqueues())
 TODO (dequeues())
-TODO (get_ith_elem ())
-TODO (indexOf ())
-TODO (contains ())
 
 /*
 void dumpq(caq_t const *restrict q, int i)

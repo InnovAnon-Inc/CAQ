@@ -159,12 +159,17 @@ size_t remaining_space_caq (caq_t const *restrict caq) {
 
 #ifdef TEST
 __attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
-size_t indexOf_cheap (cheap_t const *restrict cheap,
+size_t indexOf_caq (caq_t const *restrict caq,
 	void const *restrict e) {
-   array_t tmp;
+   /* check from head to tail */
+   /* or check from head to end, then from 0 to tail */
+
+
+   size_t n = cheap->array.n;
    size_t ret;
-   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
-   ret = indexOf_array (&tmp, e);
+   cheap->array.n = cheap->n;
+   ret = indexOf_array (cheap, e);
+   cheap->array.n = n;
    assert (ret < cheap->n);
    return ret;
 }
@@ -190,6 +195,6 @@ ssize_t indexOf_cheap_chk (cheap_t const *restrict cheap,
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
 void *index_cheap (cheap_t const *restrict cheap, size_t i) {
-   return index_array (&(cheap->array), i);
+   return index_array (&(cheap->array), (caq->head + i) % caq->array.n);
 }
 #endif
