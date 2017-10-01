@@ -60,6 +60,7 @@ __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_r
 void *gettail_chk (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 
+TODO (isfull, isempty)
 TODO (size_t remaining_caq())
 TODO (enqueues())
 TODO (dequeues())
@@ -71,6 +72,24 @@ TODO (contains ())
 void dumpq(caq_t const *restrict q, int i)
 __attribute__ ((nonnull (1), nothrow)) ;
 */
+
+size_t caqsz (size_t esz, size_t n)
+__attribute__ ((const, leaf, nothrow, warn_unused_result)) ;
+
+size_t caqsz2 (caq_t const *restrict caq)
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
+
+caq_t *ez_alloc_caq (size_t esz, size_t maxn)
+__attribute__ ((nothrow, warn_unused_result)) ;
+
+void ez_free_caq (caq_t *restrict caq)
+__attribute__ ((leaf, nonnull (1), nothrow)) ;
+
+size_t used_space_caq (caq_t const *restrict caq)
+__attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result)) ;
+
+size_t remaining_space_caq (caq_t const *restrict caq)
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 
 #ifdef __cplusplus
 }

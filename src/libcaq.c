@@ -85,7 +85,7 @@ void *gethead_chk (caq_t const *restrict q) {
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
 void *gettail (caq_t const *restrict q) {
    /*error_check (isempty (q) != false) return NULL;*/
-   return index_array (&(q->array), q->tail);
+   return index_array (&(q->array), (q->tail - 1) % q->array.n);
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
@@ -145,3 +145,51 @@ void ez_free_caq (caq_t *restrict caq) {
 	#pragma GCC diagnostic pop
    free (caq);
 }
+
+__attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
+size_t used_space_caq (caq_t const *restrict caq) {
+   if (caq->head <= caq->tail) return caq->tail - caq->head;
+   caq->tail + 1 + (caq->array.n - caq->head);
+}
+
+__attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
+size_t remaining_space_caq (caq_t const *restrict caq) {
+   return caq->array.n - used_space_caq (caq) - 1;
+}
+
+#ifdef TEST
+__attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
+size_t indexOf_cheap (cheap_t const *restrict cheap,
+	void const *restrict e) {
+   array_t tmp;
+   size_t ret;
+   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
+   ret = indexOf_array (&tmp, e);
+   assert (ret < cheap->n);
+   return ret;
+}
+
+__attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
+bool contains_cheap (cheap_t const *restrict cheap,
+	void const *restrict e) {
+   array_t tmp;
+   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
+   return contains_array (&tmp, e);
+}
+
+__attribute__ ((nonnull (1, 2), nothrow, pure, warn_unused_result))
+ssize_t indexOf_cheap_chk (cheap_t const *restrict cheap,
+   void const *restrict e) {
+   array_t tmp;
+   ssize_t ret;
+   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
+   ret = indexOf_array_chk (&tmp, e);
+   assert (ret == (ssize_t) -1 || ret < (ssize_t) cheap->n);
+   return ret;
+}
+
+__attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
+void *index_cheap (cheap_t const *restrict cheap, size_t i) {
+   return index_array (&(cheap->array), i);
+}
+#endif
