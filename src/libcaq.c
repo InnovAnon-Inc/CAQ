@@ -43,7 +43,7 @@ void enqueue (caq_t *restrict q, void const *restrict e) {
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
 int enqueue_chk (caq_t *restrict q, void const *restrict e) {
-   error_check (isfull (q)) return -1;
+   error_check (isfull (q) != false) return -1;
    enqueue (q, e);
    return 0;
 }
