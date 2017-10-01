@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <simon.h>
+
 #include <caq.h>
 
 typedef __attribute__ ((warn_unused_result))
