@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <simon.h>
 
@@ -99,7 +100,7 @@ static int caq_cb (void *restrict arg_) {
    tests[3] = caq_removes_test;*/
 
    for (i = 0; i != ntest; i++) {
-      j = random_range_java_size_t (0, ARRSZ (tests));
+      j = random_range_java_size_t ((size_t) 0, ARRSZ (tests));
       error_check (tests[j] (arg) != 0) return -1;
    }
    return 0;
