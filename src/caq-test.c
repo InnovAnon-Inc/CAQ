@@ -88,10 +88,10 @@ static int caq_removes_test (void *restrict arg_) {
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_cb (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
-   unsigned int ntest = 100;
+   unsigned int ntest = 10;
    unsigned int i;
    size_t j;
-   stdcb_t tests[1];
+   stdcb_t tests[2];
 
    TODO (more tests)
    tests[0] = caq_add_test;
