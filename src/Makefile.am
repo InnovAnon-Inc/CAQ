@@ -15,4 +15,4 @@ libcaq_la_LIBADD = $(LIBCAQ_LIBADD)
 include_HEADERS = caq.h
 
 bin_PROGRAMS = caq-test
-caq_test_LDADD = libcaq.la $(LIBCAQ_LIBADD)
+caq_test_LDADD = libcaq.la $(LIBCAQ_LIBADD) -lsimon
