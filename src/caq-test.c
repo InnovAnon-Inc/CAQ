@@ -21,9 +21,13 @@ __attribute__ ((/*leaf,*/ nonnull (1, 3, 4), nothrow, warn_unused_result))
 static int ezmalloc (do_alloc_t do_alloc, void *restrict alloc_args,
    stdcb_t cb, do_free_t do_free) {
    void *restrict ds = do_alloc (alloc_args);
+   fprintf (stderr, "A\n");
    error_check (ds == NULL) return -1;
+   fprintf (stderr, "B\n");
    error_check (cb (ds) != 0) return -2;
+   fprintf (stderr, "C\n");
    do_free (ds);
+   fprintf (stderr, "D\n");
    return 0;
 }
 
