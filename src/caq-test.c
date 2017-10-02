@@ -180,9 +180,9 @@ int main(void) {
    int i;
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
    for (i = 0; i != 10; i++) {
-      assert (remaining_space_caq (&tmp) == 10 - i);
+      assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
       enqueue (&tmp, &i);
-      assert (remaining_space_caq (&tmp) == 10 - i - 1);
+      assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
    }
    free_queue (&tmp);
 
