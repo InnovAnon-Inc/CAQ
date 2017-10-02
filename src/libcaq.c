@@ -173,7 +173,6 @@ size_t indexOf_caq (caq_t const *restrict caq,
 	void const *restrict e) {
    /* check from head to tail */
    /* or check from head to end, then from 0 to tail */
-   size_t n = cheap->array.n;
    size_t ret;
    ssize_t r;
    array_t tmp;
@@ -182,40 +181,57 @@ size_t indexOf_caq (caq_t const *restrict caq,
          caq->tail - caq->head);
       return indexOf_array (&tmp, e);
    }
-   init_array2 (&tmp, &(caq->array), caq->tail, caq->array.n - tail);
+   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
    r = indexOf_array_chk (&tmp, e);
    if (r >= 0) return (size_t) r;
-   init_array2 (&tmp, &(caq->array), 0, caq->head);
+   init_array2 (&tmp, &(caq->array), 0, caq->tail);
    return indexOf_array (&tmp, e);
 }
 
 __attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
-bool contains_cheap (cheap_t const *restrict cheap,
+bool contains_caq (caq_t const *restrict caq,
 	void const *restrict e) {
    array_t tmp;
-   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
+   if (caq->head <= caq->tail) {
+      init_array (&tmp, caq->array.data, caq->array.esz,
+         caq->tail - caq->head);
+      return contains_array (&tmp, e);
+   }
+   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
+   if (contains_array (&tmp, e)) return true;
+   init_array2 (&tmp, &(caq->array), 0, caq->tail);
    return contains_array (&tmp, e);
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, pure, warn_unused_result))
-ssize_t indexOf_cheap_chk (cheap_t const *restrict cheap,
+ssize_t indexOf_caq_chk (caq_t const *restrict caq,
    void const *restrict e) {
-   array_t tmp;
    ssize_t ret;
-   init_array (&tmp, cheap->array.data, cheap->array.esz, cheap->n);
+   array_t tmp;
+   if (caq->head <= caq->tail) {
+      init_array (&tmp, caq->array.data, caq->array.esz,
+         caq->tail - caq->head);
+      return indexOf_array_chk (&tmp, e);
+   }
+   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - head);
+   ret = indexOf_array_chk (&tmp, e);
+   if (ret >= 0) return ret;
+   init_array2 (&tmp, &(caq->array), 0, caq->tail);
    ret = indexOf_array_chk (&tmp, e);
    assert (ret == (ssize_t) -1 || ret < (ssize_t) cheap->n);
    return ret;
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
-void *index_cheap (cheap_t const *restrict cheap, size_t i) {
-   return index_array (&(cheap->array), (caq->head + i) % caq->array.n);
+void *index_caq (cheap_t const *restrict caq, size_t i) {
+   return index_array (&(caq->array), (caq->head + i) % caq->array.n);
 }
 
+/*
+TODO ()
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
-void enqueue (caq_t *restrict q, void const *restrict e) {
+void enqueues (caq_t *restrict q, void const *restrict e) {
    set_array (&(q->array), q->tail, e);
    q->tail = (q->tail + 1) % q->array.n;
 }
-#endif
+*/

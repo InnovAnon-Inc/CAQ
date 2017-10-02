@@ -86,6 +86,26 @@ __attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result)) ;
 size_t remaining_space_caq (caq_t const *restrict caq)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 
+size_t indexOf_caq (caq_t const *restrict caq,
+	void const *restrict e)
+__attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result)) ;
+
+bool contains_caq (caq_t const *restrict caq,
+	void const *restrict e)
+__attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result)) ;
+
+ssize_t indexOf_caq_chk (caq_t const *restrict caq,
+   void const *restrict e)
+__attribute__ ((nonnull (1, 2), nothrow, pure, warn_unused_result)) ;
+
+void *index_caq (cheap_t const *restrict caq, size_t i)
+__attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result)) ;
+
+/*
+void enqueues (caq_t *restrict q, void const *restrict e)
+__attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
+*/
+
 #ifdef __cplusplus
 }
 #endif
