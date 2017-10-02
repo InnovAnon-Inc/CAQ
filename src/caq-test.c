@@ -173,7 +173,7 @@ int main(void) {
 
    caq_t tmp;
    int i, j, k;
-
+   int N[10];
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
 
 
@@ -229,6 +229,20 @@ int main(void) {
       assert (remaining_space_caq (&tmp) == (size_t) 10);
       assert (used_space_caq (&tmp) == (size_t) 0);
 
+      for (i = 0; i != 10; i++)
+         N[i] = i;
+
+      enqueues (&tmp, N, 10);
+      assert (isfull (&tmp));
+      assert (remaining_space_caq (&tmp) == (size_t) (0));
+      assert (used_space_caq (&tmp) == (size_t) (10));
+      dequeues (&tmp, N, 10);
+      assert (isempty (&tmp));
+      assert (remaining_space_caq (&tmp) == (size_t) 10);
+      assert (used_space_caq (&tmp) == (size_t) 0);
+
+      for (i = 0; i != 10; i++)
+         assert (N[i] == i);
 
    free_queue (&tmp);
 
