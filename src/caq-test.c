@@ -213,8 +213,8 @@ int main(void) {
          assert (used_space_caq (&tmp) == (size_t) (i + 1));
       }
       assert (isfull (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) (10 - (k)));
-      assert (used_space_caq (&tmp) == (size_t) ((k) - 0));
+      assert (remaining_space_caq (&tmp) == (size_t) (0));
+      assert (used_space_caq (&tmp) == (size_t) (10));
       for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) i);
          assert (used_space_caq (&tmp) == (size_t) (10 - i));
