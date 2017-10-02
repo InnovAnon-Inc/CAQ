@@ -80,26 +80,24 @@ static int caq_removes_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t n;
-#ifdef TEST
    fprintf (stderr, "caq_removes_test\n");
    n = min (ARRSZ (tmps), used_space_caq (arg));
    /*if (n == 0) return 0;*/
    if (n != 0)
       n = random_range_java_size_t2 ((size_t) 0, n);
    dequeues (arg, tmps, n);
-#endif
    return 0;
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_cb (void *restrict arg) {
-   stdcb_t tests[3];
+   stdcb_t tests[4];
 
    TODO (more tests)
    tests[0] = caq_add_test;
    tests[1] = caq_remove_test;
    tests[2] = caq_adds_test;
-   /*tests[3] = caq_removes_test;*/
+   tests[3] = caq_removes_test;
    /*assert (ARRSZ (tests) == 2);*/
 
    error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
