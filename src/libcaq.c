@@ -265,11 +265,28 @@ void *index_caq (caq_t const *restrict caq, size_t i) {
    return index_array (&(caq->array), (caq->head + i) % caq->array.n);
 }
 
-/*
 TODO ()
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
-void enqueues (caq_t *restrict q, void const *restrict e) {
-   set_array (&(q->array), q->tail, e);
-   q->tail = (q->tail + 1) % q->array.n;
+void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
+   if (q->head > q->tail || n <= q->array.n)
+      sets_array (&(q->array), q->tail, e, n);
+   else {
+      size_t diff = q->array.n - q->tail;
+      sets_array (&(q->array), q->tail, e, diff);
+      sets_array (&(q->array), 0, e, n - diff);
+   }
+   /*
+   if (q->head <= q->tail) {
+      if (n <= q->array.n) {
+         sets_array (&(q->array), q->tail, e, n);
+      } else {
+         size_t diff = q->array.n - q->tail;
+         sets_array (&(q->array), q->tail, e, diff);
+         sets_array (&(q->array), 0, e, n - diff);
+      }
+   } else {
+      sets_array (&(q->array), q->tail, e, n);
+   }
+   */
+   q->tail = (q->tail + n) % q->array.n;
 }
-*/
