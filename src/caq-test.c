@@ -181,9 +181,11 @@ int main(void) {
    time_t t;
    alloc_t alloc_arg;
 
+#ifdef TESTING
    caq_t tmp;
    int i, j, k;
    int N[10];
+
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
 
 
@@ -215,6 +217,7 @@ int main(void) {
       assert (used_space_caq (&tmp) == (size_t) 0);
    }
 */
+
    for (i = 0; i != 10; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
          assert (used_space_caq (&tmp) == (size_t) i);
@@ -257,7 +260,7 @@ int main(void) {
          assert (N[i] == i);
 
    free_queue (&tmp);
-
+#endif
    t = time (NULL);
    srand ((unsigned int) t);
 
