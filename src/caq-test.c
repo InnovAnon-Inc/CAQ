@@ -205,7 +205,8 @@ int main(void) {
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;
 #endif
-   error_check (wtf = caq_alloc (&alloc_arg) != 0) return -1;
+   wtf = caq_alloc (&alloc_arg)
+   error_check (wtf == NULL) return -1;
    error_check (caq_cb (wtf) != 0) return -2;
    caq_free (wtf);
 
