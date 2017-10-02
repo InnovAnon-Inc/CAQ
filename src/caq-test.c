@@ -48,14 +48,14 @@ static int caq_add_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
    fprintf (stderr, "caq_add_test\n");
-#ifdef WTF
+
    if (isfull (arg)) return 0;
    fprintf (stderr, "a\n");
    tmp = random_range_java (-10, 10);
    fprintf (stderr, "b\n");
    enqueue (arg, &tmp);
    fprintf (stderr, "c\n");
-#endif
+
    return 0;
 }
 
