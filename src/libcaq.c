@@ -134,7 +134,8 @@ caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
 		return NULL;
 
    init_queue (caq, data, esz, maxn);
-	return caq;
+	/*return caq;*/
+   return (caq_t *restrict) *(combined[0]);
    /*
    void *restrict tmp;
    caq_t *restrict caq;
