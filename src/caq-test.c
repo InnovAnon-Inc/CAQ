@@ -48,14 +48,14 @@ static int caq_add_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
    fprintf (stderr, "caq_add_test\n");
-#ifdef WTF
+
    if (isfull (arg)) return 0;
    fprintf (stderr, "a\n");
    tmp = random_range_java (-10, 10);
    fprintf (stderr, "b\n");
    enqueue (arg, &tmp);
    fprintf (stderr, "c\n");
-#endif
+
    return 0;
 }
 
@@ -63,13 +63,13 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
-#ifdef WTF
+
    fprintf (stderr, "caq_remove_test\n");
    if (isempty (arg)) return 0;
    fprintf (stderr, "d\n");
    dequeue (arg, &tmp);
    fprintf (stderr, "e\n");
-#endif
+
    return 0;
 }
 
@@ -125,7 +125,7 @@ static int caq_cb (void *restrict arg_) {
    tests[1] = caq_remove_test;
    /*tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;*/
-#ifdef WTF
+
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
       j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
@@ -134,7 +134,7 @@ static int caq_cb (void *restrict arg_) {
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
    }
-#endif
+
    return 0;
 }
 
@@ -201,20 +201,21 @@ int main(void) {
 
    alloc_arg.esz = sizeof (int);
    alloc_arg.n   = 10;
-#ifdef WTF
+
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;
-#endif
-#ifdef WTF
+
+/*
    wtf = caq_alloc (&alloc_arg);
    error_check (wtf == NULL) return -1;
    error_check (caq_cb (wtf) != 0) return -2;
    caq_free (wtf);
-#endif
+*/
+/*
    wtf = ez_alloc_caq (sizeof (int), (size_t) 10);
    error_check (wtf == NULL) return -1;
    ez_free_caq (wtf);
-
+*/
    return EXIT_SUCCESS;
 }
 
