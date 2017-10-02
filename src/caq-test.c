@@ -59,7 +59,7 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
-   if (isfull (arg)) return 0;
+   if (isfull (arg)) return TEST_NA;
    tmp = random_range_java (-10, 10);
    enqueue (arg, &tmp);
    dumpq (arg);
@@ -70,7 +70,7 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
-   if (isempty (arg)) return 0;
+   if (isempty (arg)) return TEST_NA;
    dequeue (arg, &tmp);
    dumpq (arg);
    return 0;
@@ -118,6 +118,7 @@ static int caq_cb (void *restrict arg) {
    tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;
    /*assert (ARRSZ (tests) == 2);*/
+
 
    error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
       return -1;
