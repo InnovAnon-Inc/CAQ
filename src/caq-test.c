@@ -167,18 +167,18 @@ int main(void) {
 
    int i, j, k;
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
-   for (k = 0; k != 10; k++) {
-      for (i = 0; i != k; i++) {
+   for (k = 0; k != 20; k++) {
+      for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
          assert (used_space_caq (&tmp) == (size_t) i);
          enqueue (&tmp, &i);
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
          assert (used_space_caq (&tmp) == (size_t) (i + 1));
       }
-      assert (k != 10 || isfull (&tmp));
-      assert (remaining_space_caq (&tmp) == 10 - k);
-      assert (used_space_caq (&tmp) == k - 0);
-      for (i = 0; i != k; i++) {
+      assert (10 % k != 0 || isfull (&tmp));
+      assert (remaining_space_caq (&tmp) == (size_t) (10 - k));
+      assert (used_space_caq (&tmp) == (size_t) (k - 0));
+      for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) i);
          assert (used_space_caq (&tmp) == (size_t) (10 - i));
          dequeue (&tmp, &j);
@@ -189,8 +189,8 @@ int main(void) {
       assert (isempty (&tmp));
       /*assert (remaining_space_caq (&tmp) == 10 - k);
       assert (used_space_caq (&tmp) == k - 0);*/
-      assert (remaining_space_caq (&tmp) == 10);
-      assert (used_space_caq (&tmp) == 0);
+      assert (remaining_space_caq (&tmp) == (size_t) 10);
+      assert (used_space_caq (&tmp) == (size_t) 0);
    }
    free_queue (&tmp);
 
