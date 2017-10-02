@@ -91,13 +91,13 @@ static int caq_removes_test (void *restrict arg_) {
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_cb (void *restrict arg) {
-   stdcb_t tests[4];
+   stdcb_t tests[2];
 
    TODO (more tests)
    tests[0] = caq_add_test;
    tests[1] = caq_remove_test;
-   tests[2] = caq_adds_test;
-   tests[3] = caq_removes_test;
+   /*tests[2] = caq_adds_test;
+   tests[3] = caq_removes_test;*/
    /*assert (ARRSZ (tests) == 2);*/
 
    error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
