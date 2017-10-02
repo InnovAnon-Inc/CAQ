@@ -184,7 +184,7 @@ size_t indexOf_caq (caq_t const *restrict caq,
    init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
    r = indexOf_array_chk (&tmp, e);
    if (r >= 0) return (size_t) r;
-   init_array2 (&tmp, &(caq->array), 0, caq->tail);
+   init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
    return indexOf_array (&tmp, e);
 }
 
@@ -199,7 +199,7 @@ bool contains_caq (caq_t const *restrict caq,
    }
    init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
    if (contains_array (&tmp, e)) return true;
-   init_array2 (&tmp, &(caq->array), 0, caq->tail);
+   init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
    return contains_array (&tmp, e);
 }
 
@@ -216,14 +216,14 @@ ssize_t indexOf_caq_chk (caq_t const *restrict caq,
    init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - head);
    ret = indexOf_array_chk (&tmp, e);
    if (ret >= 0) return ret;
-   init_array2 (&tmp, &(caq->array), 0, caq->tail);
+   init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
    ret = indexOf_array_chk (&tmp, e);
-   assert (ret == (ssize_t) -1 || ret < (ssize_t) cheap->n);
+   assert (ret == (ssize_t) -1 || ret < (ssize_t) caq->n);
    return ret;
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
-void *index_caq (cheap_t const *restrict caq, size_t i) {
+void *index_caq (caq_t const *restrict caq, size_t i) {
    return index_array (&(caq->array), (caq->head + i) % caq->array.n);
 }
 
