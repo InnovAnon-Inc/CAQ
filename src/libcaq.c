@@ -127,14 +127,23 @@ caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
 
 	eszs[0] = sizeof (caq_t);
 	eszs[1] = datasz  (esz, maxn);
-	error_check (mmalloc (combined, eszs,
+   combined[0] = &caq;
+   combined[1] = &data;
+	error_check (mmalloc2 (combined, eszs,
 		eszs[0] + eszs[1], ARRSZ (eszs)) != 0)
 		return NULL;
-	caq  = (caq_t *restrict) combined[0];
-	data = (void *restrict)  combined[1];
 
    init_queue (caq, data, esz, maxn);
 	return caq;
+   /*
+   void *restrict tmp;
+   caq_t *restrict caq;
+   void *restrict data;
+   tmp = malloc (caqsz (esz, max));
+   error_check (tmp == NULL) return -1;
+   caq = (caq_t *restrict) tmp;
+   (char *restrict) tmp + sizeof (caq_t)
+   */
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow))
