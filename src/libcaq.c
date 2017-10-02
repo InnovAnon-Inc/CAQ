@@ -273,13 +273,16 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
 #endif
    size_t diff = q->array.n - q->tail;
    array_t tmp;
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
    init_array (&tmp, e, q->array.esz, n);
+	#pragma GCC diagnostic pop
    assert (n == 0 || ! isfull (q));
    assert (remaining_space_caq (q) >= n);
    if (q->head > q->tail || n <= diff)
       sets_array (&(q->array), q->tail, e, n);
    else {
-      sets_array (&(q->array), q->tail, e + 0, diff);
+      sets_array (&(q->array), q->tail, e, diff);
       sets_array (&(q->array), (size_t) 0, /*e+diff*/index_array (&tmp, diff), n - diff);
    }
    /*
@@ -308,7 +311,10 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
 #endif
    size_t diff = q->array.n - q->head;
    array_t tmp;
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
    init_array (&tmp, e, q->array.esz, n);
+	#pragma GCC diagnostic pop
    assert (n == 0 || ! isempty (q));
    assert (used_space_caq (q) >= n);
    if (q->tail > q->head || n <= diff)
