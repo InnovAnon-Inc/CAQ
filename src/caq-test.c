@@ -204,7 +204,7 @@ int main(void) {
 #ifdef WTF
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;
-#ifdef WTF
+#endif
    error_check (wtf = caq_alloc (&alloc_arg) != 0) return -1;
    error_check (caq_cb (wtf) != 0) return -2;
    caq_free (wtf);
