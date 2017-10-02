@@ -182,7 +182,7 @@ int main(void) {
       assert (used_space_caq (&tmp) == (size_t) (10 - i));
       dequeue (&tmp, &j);
       assert (j == i);
-      assert (remaining_space_caq (&tmp) == (size_t) (i - 1));
+      assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
       assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
    }
    assert (isempty (&tmp));
