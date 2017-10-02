@@ -49,8 +49,8 @@ void enqueue (caq_t *restrict q, void const *restrict e) {
    fprintf (stderr, "old: %d\nnew: %d\n",
       (int) chk_rem, (int) remaining_space_caq (q));
 #endif
-   assert (chk_rem  == remaining_space_caq (q) - 1);
-   assert (chk_used == used_space_caq      (q) + 1);
+   assert (chk_rem  - 1 == remaining_space_caq (q));
+   assert (chk_used + 1 == used_space_caq      (q));
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
@@ -69,8 +69,8 @@ void dequeue (caq_t *restrict q, void *restrict e) {
    assert (! isempty (q));
    get_array (&(q->array), q->head, e);
    q->head = (q->head + 1) % q->array.n;
-   assert (chk_rem  == remaining_space_caq (q) + 1);
-   assert (chk_used == used_space_caq      (q) - 1);
+   assert (chk_rem  + 1 == remaining_space_caq (q));
+   assert (chk_used - 1== used_space_caq      (q));
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
