@@ -194,14 +194,20 @@ int main(void) {
 
    time_t t;
    alloc_t alloc_arg;
+   caq_t *restrict wtf;
 
    t = time (NULL);
    srand ((unsigned int) t);
 
    alloc_arg.esz = sizeof (int);
    alloc_arg.n   = 10;
+#ifdef WTF
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;
+#ifdef WTF
+   error_check (wtf = caq_alloc (&alloc_arg) != 0) return -1;
+   error_check (caq_cb (wtf) != 0) return -2;
+   caq_free (wtf);
 
    return EXIT_SUCCESS;
 }
