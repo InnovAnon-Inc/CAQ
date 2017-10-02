@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 
+#include <mmalloc.h>
 #include <simon.h>
 
 #include <caq.h>
