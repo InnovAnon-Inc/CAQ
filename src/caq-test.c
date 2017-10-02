@@ -37,7 +37,7 @@ static void dumpq(caq_t const *restrict q) {
    fputs ("Q: ", stderr);
    for (i = 0; i != used_space_caq (q); i++) {
       void *restrict head = index_caq (q, i);
-      fprintf (stderr, "head: %d, ", *(int *restrict) head);
+      fprintf (stderr, "%d: %d, ", (int) i, *(int *restrict) head);
    }
    fputs ("\n", stderr);
 }
@@ -82,7 +82,6 @@ static int caq_adds_test (void *restrict arg_) {
    int tmps[10];
    size_t i;
    size_t n;
-   fprintf (stderr, "caq_adds_test\n");
    n = min (ARRSZ (tmps), remaining_space_caq (arg));
    /*if (n == 0) return 0;*/
    if (n != 0)
@@ -98,7 +97,6 @@ static int caq_removes_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t n;
-   fprintf (stderr, "caq_removes_test\n");
    n = min (ARRSZ (tmps), used_space_caq (arg));
    /*if (n == 0) return 0;*/
    if (n != 0)
