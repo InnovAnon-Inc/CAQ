@@ -127,8 +127,8 @@ caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
 
 	eszs[0] = sizeof (caq_t);
 	eszs[1] = datasz  (esz, maxn);
-   combined[0] = &caq;
-   combined[1] = &data;
+   combined[0] = (void *restrict *restrict) &caq;
+   combined[1] = (void *restrict *restrict) &data;
 	error_check (mmalloc2 (combined, eszs,
 		eszs[0] + eszs[1], ARRSZ (eszs)) != 0)
 		return NULL;
