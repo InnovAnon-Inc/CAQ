@@ -65,7 +65,6 @@ static int caq_adds_test (void *restrict arg_) {
    int tmps[10];
    size_t i;
    size_t n;
-#ifdef TEST
    fprintf (stderr, "caq_adds_test\n");
    n = min (ARRSZ (tmps), remaining_space_caq (arg));
    /*if (n == 0) return 0;*/
@@ -73,7 +72,6 @@ static int caq_adds_test (void *restrict arg_) {
       n = random_range_java_size_t2 ((size_t) 0, n);
    ez_random_ranges (tmps, n, -10, 10);
    enqueues (arg, tmps, n);
-#endif
    return 0;
 }
 

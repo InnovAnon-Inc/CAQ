@@ -268,6 +268,11 @@ void *index_caq (caq_t const *restrict caq, size_t i) {
 TODO ()
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
 void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
+#ifndef NDEBUG
+   size_t chk_rem  = remaining_space_caq (q);
+   size_t chk_used = used_space_caq (q);
+#endif
+   assert (! isfull (q));
    if (q->head > q->tail || n <= q->array.n)
       sets_array (&(q->array), q->tail, e, n);
    else {
@@ -289,4 +294,6 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
    }
    */
    q->tail = (q->tail + n) % q->array.n;
+   assert (chk_rem  - n == remaining_space_caq (q));
+   assert (chk_used + n == used_space_caq      (q));
 }

@@ -101,10 +101,8 @@ __attribute__ ((nonnull (1, 2), nothrow, pure, warn_unused_result)) ;
 void *index_caq (caq_t const *restrict caq, size_t i)
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result)) ;
 
-/*
-void enqueues (caq_t *restrict q, void const *restrict e)
+void enqueues (caq_t *restrict q, void const *restrict e, size_t n)
 __attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
-*/
 
 #ifdef __cplusplus
 }
