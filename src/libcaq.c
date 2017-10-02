@@ -45,6 +45,10 @@ void enqueue (caq_t *restrict q, void const *restrict e) {
    assert (! isfull (q));
    set_array (&(q->array), q->tail, e);
    q->tail = (q->tail + 1) % q->array.n;
+#ifndef NDEBUG
+   fprintf (stderr, "old: %d\nnew: %d\n",
+      (int) chk_rem, (int) remaining_space_caq (q));
+#endif
    assert (chk_rem  == remaining_space_caq (q) - 1);
    assert (chk_used == used_space_caq      (q) + 1);
 }
