@@ -60,9 +60,6 @@ __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_r
 void *gettail_chk (caq_t const *restrict q)
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result)) ;
 
-TODO (enqueues())
-TODO (dequeues())
-
 /*
 void dumpq(caq_t const *restrict q, int i)
 __attribute__ ((nonnull (1), nothrow)) ;

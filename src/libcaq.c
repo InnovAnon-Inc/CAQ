@@ -278,7 +278,7 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
       sets_array (&(q->array), q->tail, e, n);
    else {
       sets_array (&(q->array), q->tail, e, diff);
-      sets_array (&(q->array), (size_t) 0, e, n - diff);
+      sets_array (&(q->array), (size_t) 0, e + diff, n - diff);
    }
    /*
    if (q->head <= q->tail) {
@@ -311,7 +311,7 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
       sets_array (&(q->array), q->head, e, n);
    else {
       sets_array (&(q->array), q->head, e, diff);
-      sets_array (&(q->array), (size_t) 0, e, n - diff);
+      sets_array (&(q->array), (size_t) 0, e + diff, n - diff);
    }
    q->head = (q->head + n) % q->array.n;
    assert (chk_rem  + n == remaining_space_caq (q));
