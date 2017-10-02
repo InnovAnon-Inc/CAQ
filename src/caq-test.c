@@ -132,16 +132,16 @@ static int caq_cb (void *restrict arg_) {
    tests[1] = caq_remove_test;
    /*tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;*/
-   assert (ARRSZ (tests) == 2);
+   /*assert (ARRSZ (tests) == 2);*/
 
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
-      j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
+      j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests) - 1);
       assert (j <= ARRSZ (tests));
       fprintf (stderr, "n, j: %d\n", (int) j);
-      assert (j != 0 || tests[j] == caq_add_test);
+      /*assert (j != 0 || tests[j] == caq_add_test);
       assert (j != 1 || tests[j] == caq_remove_test);
-      assert (j == 0 || j == 1);
+      assert (j == 0 || j == 1);*/
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
    }
