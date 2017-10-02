@@ -2,6 +2,7 @@
 #include <config.h>
 #endif
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -124,6 +125,8 @@ static int caq_cb (void *restrict arg_) {
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
       j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
+      assert (0 <= j);
+      assert (j <= ARRRSZ (tests));
       fprintf (stderr, "n\n");
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
