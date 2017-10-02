@@ -318,28 +318,17 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
    assert (chk_used - n == used_space_caq      (q));
 }
 
-#ifdef TEST
-__attribute__ ((leaf, nonnull (1), nothrow))
+__attribute__ ((leaf, nonnull (1, 2), nothrow))
 void frees_caq (caq_t const *restrict caq, free_t f) {
-   size_t ret;
-   if (caq->head <= caq->tail)
-
-      ret = caq->tail - caq->head;
-   else
-      ret = caq->tail /*+ 1*/ + (caq->array.n - caq->head);
-   assert (ret <= caq->array.n - 1);
-
-
-
+   array_t tmp;
    if (caq->head <= caq->tail) {
-      init_array (&tmp, caq->array.data, caq->array.esz,
+      init_array2 (&tmp, &(caq->array), caq->head,
          caq->tail - caq->head);
-      return indexOf_array_chk (&tmp, e);
+      frees_array (&tmp, f);
+   } else {
+      init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
+      frees_array (&tmp, f);
+      init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
+      frees_array (&tmp, f);
    }
-   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
-   ret = indexOf_array_chk (&tmp, e);
-   if (ret >= 0) return ret;
-   init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
-   return ret;
 }
-#endif

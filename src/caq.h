@@ -107,6 +107,9 @@ __attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
 void dequeues (caq_t *restrict q, void *restrict e, size_t n)
 __attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
 
+void frees_caq (caq_t const *restrict caq, free_t cb)
+__attribute__ ((leaf, nonnull (1, 2), nothrow)) ;
+
 #ifdef __cplusplus
 }
 #endif
