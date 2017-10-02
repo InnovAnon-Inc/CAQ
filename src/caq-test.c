@@ -29,6 +29,21 @@ static int ezmalloc (do_alloc_t do_alloc, void *restrict alloc_args,
    return 0;
 }
 */
+
+
+__attribute__ ((nonnull (1), nothrow))
+static void dumpq(caq_t const *restrict q) {
+   size_t i;
+   fputs ("Q: ", stderr);
+   for (i = 0; i != used_space_caq (q); i++) {
+      void *restrict head = index_caq (q, i);
+      fprintf (stderr, "head: %d, ", *(int *restrict) head);
+   }
+   fputs ("\n", stderr);
+}
+
+
+
 typedef struct {
    size_t esz;
    size_t n;
@@ -119,16 +134,7 @@ static void caq_free (void *restrict arg_) {
 
 
 
-__attribute__ ((nonnull (1), nothrow))
-static void dumpq(caq_t const *restrict q) {
-   size_t i;
-   fputs ("Q: ", stderr);
-   for (i = 0; i != used_space_caq (q); i++) {
-      void *restrict head = index_caq (q, i);
-      fprintf (stderr, "head: %d, ", *(int *restrict) head);
-   }
-   fputs ("\n", stderr);
-}
+
 
 
 
