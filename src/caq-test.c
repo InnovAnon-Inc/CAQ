@@ -177,8 +177,9 @@ int main(void) {
 
 
 
-   int i, j, k;
+
 /*
+ * int i, j, k;
    for (k = 1; k != 20; k++) {
       for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
@@ -207,6 +208,7 @@ int main(void) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
          assert (used_space_caq (&tmp) == (size_t) i);
          enqueue (&tmp, &i);
+         dumpq (&tmp);
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
          assert (used_space_caq (&tmp) == (size_t) (i + 1));
       }
@@ -217,6 +219,7 @@ int main(void) {
          assert (remaining_space_caq (&tmp) == (size_t) i);
          assert (used_space_caq (&tmp) == (size_t) (10 - i));
          dequeue (&tmp, &j);
+         dumpq (&tmp);
          assert (j == i);
          assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
          assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
