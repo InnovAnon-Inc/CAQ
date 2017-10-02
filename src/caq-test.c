@@ -211,7 +211,7 @@ int main(void) {
    error_check (caq_cb (wtf) != 0) return -2;
    caq_free (wtf);
 #endif
-   wtf = ez_alloc_caq (sizeof (int), 10);
+   wtf = ez_alloc_caq (sizeof (int), (size_t) 10);
    error_check (wtf == NULL) return -1;
    ez_free_caq (wtf);
 
