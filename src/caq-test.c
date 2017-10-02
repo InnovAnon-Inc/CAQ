@@ -11,14 +11,14 @@
 #include <simon.h>
 
 #include <caq.h>
-
+/*
 typedef __attribute__ ((warn_unused_result))
 void *(*do_alloc_t) (void *restrict) ;
 
 typedef __attribute__ ((nonnull (1)))
 void (*do_free_t) (void *restrict) ;
 
-__attribute__ ((/*leaf,*/ nonnull (1, 3, 4), nothrow, warn_unused_result))
+__attribute__ ((nonnull (1, 3, 4), nothrow, warn_unused_result))
 static int ezmalloc (do_alloc_t do_alloc, void *restrict alloc_args,
    stdcb_t cb, do_free_t do_free) {
    void *restrict ds = do_alloc (alloc_args);
@@ -27,7 +27,7 @@ static int ezmalloc (do_alloc_t do_alloc, void *restrict alloc_args,
    do_free (ds);
    return 0;
 }
-
+*/
 typedef struct {
    size_t esz;
    size_t n;
@@ -175,6 +175,7 @@ int main(void) {
 
    time_t t;
    alloc_t alloc_arg;
+   /*
    caq_t tmp;
 
    int i;
@@ -185,7 +186,7 @@ int main(void) {
       assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
    }
    free_queue (&tmp);
-
+   */
    t = time (NULL);
    srand ((unsigned int) t);
 
