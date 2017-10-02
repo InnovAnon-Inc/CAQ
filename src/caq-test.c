@@ -76,7 +76,7 @@ static int caq_adds_test (void *restrict arg_) {
    /*if (n == 0) return 0;*/
    fprintf (stderr, "f\n");
    if (n != 0)
-      n = random_range_java_size_t (0, n);
+      n = random_range_java_size_t2 (0, n);
    fprintf (stderr, "g\n");
    ez_random_ranges (tmps, n, -10, 10);
    fprintf (stderr, "h\n");
@@ -93,7 +93,7 @@ static int caq_removes_test (void *restrict arg_) {
    /*if (n == 0) return 0;*/
    fprintf (stderr, "j\n");
    if (n != 0)
-      n = random_range_java_size_t (0, n);
+      n = random_range_java_size_t2 (0, n);
    fprintf (stderr, "k\n");
    dequeues (arg, tmps, n);
    fprintf (stderr, "l\n");
@@ -117,7 +117,7 @@ static int caq_cb (void *restrict arg_) {
 
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
-      j = random_range_java_size_t ((size_t) 0, ARRSZ (tests));
+      j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
       fprintf (stderr, "n\n");
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
