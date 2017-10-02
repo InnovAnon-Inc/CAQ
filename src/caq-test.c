@@ -125,7 +125,7 @@ static int caq_cb (void *restrict arg_) {
    tests[1] = caq_remove_test;
    /*tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;*/
-
+#ifdef WTF
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
       j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
@@ -134,6 +134,7 @@ static int caq_cb (void *restrict arg_) {
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
    }
+#endif
    return 0;
 }
 
