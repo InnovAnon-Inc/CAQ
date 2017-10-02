@@ -35,8 +35,8 @@ typedef struct {
 } alloc_t;
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static void *caq_alloc (void *restrict arg_) {
-   alloc_t *restrict arg = (alloc_t *restrict) arg_;
+static void *caq_alloc (void const *restrict arg_) {
+   alloc_t const *restrict arg = (alloc_t const *restrict) arg_;
    return ez_alloc_caq (arg->esz, arg->n);
 }
 
