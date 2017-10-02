@@ -132,6 +132,7 @@ static int caq_cb (void *restrict arg_) {
    tests[1] = caq_remove_test;
    /*tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;*/
+   assert (ARRSZ (tests) == 2);
 
    for (i = 0; i != ntest; i++) {
       fprintf (stderr, "m\n");
