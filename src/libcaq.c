@@ -15,7 +15,7 @@ void init_queue (
    caq_t *restrict q,
    void *restrict data,
    size_t esz, size_t n) {
-   init_array (&(q->array), data, esz, n);
+   init_array (&(q->array), data, esz, n + 1);
    q->head = 0;
    q->tail = 0;
 }
@@ -24,7 +24,7 @@ __attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int alloc_queue (
    caq_t *restrict q,
    size_t esz, size_t n) {
-   error_check (alloc_array (&(q->array), esz, n) != 0) return -1;
+   error_check (alloc_array (&(q->array), esz, n + 1) != 0) return -1;
    q->head = 0;
    q->tail = 0;
    return 0;
@@ -110,7 +110,7 @@ void dumpq(caq_t const *restrict q, int i) {
 
 __attribute__ ((const, leaf, nothrow, warn_unused_result))
 size_t caqsz (size_t esz, size_t n) {
-   return sizeof (caq_t) + datasz (esz, n);
+   return sizeof (caq_t) + datasz (esz, n + 1);
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
@@ -126,7 +126,7 @@ caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
 	void *restrict data;
 
 	eszs[0] = sizeof (caq_t);
-	eszs[1] = datasz  (esz, maxn);
+	eszs[1] = datasz  (esz, maxn + 1);
    combined[0] = (void *restrict *restrict) &caq;
    combined[1] = (void *restrict *restrict) &data;
 	error_check (mmalloc2 (combined, eszs,
