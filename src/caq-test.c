@@ -134,6 +134,9 @@ static int caq_cb (void *restrict arg_) {
       j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests));
       assert (j <= ARRSZ (tests));
       fprintf (stderr, "n\n");
+      assert (j != 0 || tests[j] == caq_add_test);
+      assert (j != 1 || tests[j] == caq_remove_test);
+      assert (j == 0 || j == 1);
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
    }
