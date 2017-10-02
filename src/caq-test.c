@@ -64,13 +64,15 @@ static int caq_adds_test (void *restrict arg_) {
    int tmps[10];
    size_t i;
    size_t n;
+#ifdef TEST
    fprintf (stderr, "caq_adds_test\n");
    n = min (ARRSZ (tmps), remaining_space_caq (arg));
    /*if (n == 0) return 0;*/
    if (n != 0)
-      n = random_range_java_size_t2 (0, n);
+      n = random_range_java_size_t2 ((size_t) 0, n);
    ez_random_ranges (tmps, n, -10, 10);
    enqueues (arg, tmps, n);
+#endif
    return 0;
 }
 
@@ -79,12 +81,14 @@ static int caq_removes_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t n;
+#ifdef TEST
    fprintf (stderr, "caq_removes_test\n");
    n = min (ARRSZ (tmps), used_space_caq (arg));
    /*if (n == 0) return 0;*/
    if (n != 0)
-      n = random_range_java_size_t2 (0, n);
+      n = random_range_java_size_t2 ((size_t) 0, n);
    dequeues (arg, tmps, n);
+#endif
    return 0;
 }
 
@@ -174,11 +178,11 @@ int main(void) {
    caq_t tmp;
 
    int i;
-   alloc_queue (&tmp, sizeof (int), 10);
+   error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
    for (i = 0; i != 10; i++) {
-      assert (remaining_space_caq (&caq) == 10 - i);
+      assert (remaining_space_caq (&tmp) == 10 - i);
       enqueue (&tmp, &i);
-      assert (remaining_space_caq (&caq) == 10 - i - 1);
+      assert (remaining_space_caq (&tmp) == 10 - i - 1);
    }
    free_queue (&tmp);
 
