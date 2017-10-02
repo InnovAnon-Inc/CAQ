@@ -167,7 +167,7 @@ int main(void) {
 
    int i, j, k;
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
-   for (k = 0; k != 20; k++) {
+   for (k = 1; k != 20; k++) {
       for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
          assert (used_space_caq (&tmp) == (size_t) i);
