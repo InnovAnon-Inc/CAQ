@@ -120,7 +120,7 @@ size_t caqsz2 (caq_t const *restrict caq) {
 
 __attribute__ ((nothrow, warn_unused_result))
 caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
-   void *restrict combined[2];
+   void const *restrict *restrict combined[2];
 	size_t eszs[2];
 	caq_t *restrict caq;
 	void *restrict data;
