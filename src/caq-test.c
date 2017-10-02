@@ -165,29 +165,33 @@ int main(void) {
 
    caq_t tmp;
 
-   int i, j;
+   int i, j, k;
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
-   for (i = 0; i != 10; i++) {
-      assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
-      assert (used_space_caq (&tmp) == (size_t) i);
-      enqueue (&tmp, &i);
-      assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
-      assert (used_space_caq (&tmp) == (size_t) (i + 1));
+   for (k = 0; k != 10; k++) {
+      for (i = 0; i != k; i++) {
+         assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
+         assert (used_space_caq (&tmp) == (size_t) i);
+         enqueue (&tmp, &i);
+         assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
+         assert (used_space_caq (&tmp) == (size_t) (i + 1));
+      }
+      assert (k != 10 || isfull (&tmp));
+      assert (remaining_space_caq (&tmp) == 10 - k);
+      assert (used_space_caq (&tmp) == k - 0);
+      for (i = 0; i != k; i++) {
+         assert (remaining_space_caq (&tmp) == (size_t) i);
+         assert (used_space_caq (&tmp) == (size_t) (10 - i));
+         dequeue (&tmp, &j);
+         assert (j == i);
+         assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
+         assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
+      }
+      assert (isempty (&tmp));
+      /*assert (remaining_space_caq (&tmp) == 10 - k);
+      assert (used_space_caq (&tmp) == k - 0);*/
+      assert (remaining_space_caq (&tmp) == 10);
+      assert (used_space_caq (&tmp) == 0);
    }
-   assert (isfull (&tmp));
-   assert (remaining_space_caq (&tmp) == 0);
-   assert (used_space_caq (&tmp) == 10);
-   for (i = 0; i != 10; i++) {
-      assert (remaining_space_caq (&tmp) == (size_t) i);
-      assert (used_space_caq (&tmp) == (size_t) (10 - i));
-      dequeue (&tmp, &j);
-      assert (j == i);
-      assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
-      assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
-   }
-   assert (isempty (&tmp));
-   assert (remaining_space_caq (&tmp) == 10);
-   assert (used_space_caq (&tmp) == 0);
    free_queue (&tmp);
 
    t = time (NULL);
