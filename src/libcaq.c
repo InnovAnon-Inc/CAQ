@@ -38,8 +38,15 @@ void free_queue (caq_t const *restrict q) {
 
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
 void enqueue (caq_t *restrict q, void const *restrict e) {
+#ifndef NDEBUG
+   size_t chk_rem  = remaining_space_caq (q);
+   size_t chk_used = used_space_caq (q);
+#endif
+   assert (! isfull (q));
    set_array (&(q->array), q->tail, e);
    q->tail = (q->tail + 1) % q->array.n;
+   assert (chk_rem  == remaining_space_caq (q) - 1);
+   assert (chk_used == used_space_caq      (q) + 1);
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
@@ -51,8 +58,15 @@ int enqueue_chk (caq_t *restrict q, void const *restrict e) {
 
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
 void dequeue (caq_t *restrict q, void *restrict e) {
+#ifndef NDEBUG
+   size_t chk_rem  = remaining_space_caq (q);
+   size_t chk_used = used_space_caq (q);
+#endif
+   assert (! isempty (q));
    get_array (&(q->array), q->head, e);
    q->head = (q->head + 1) % q->array.n;
+   assert (chk_rem  == remaining_space_caq (q) + 1);
+   assert (chk_used == used_space_caq      (q) - 1);
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
@@ -74,6 +88,7 @@ bool isfull (caq_t const *restrict q) {
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
 void *gethead (caq_t const *restrict q) {
+   assert (! isempty (q));
    return index_array (&(q->array), q->head);
 }
 
@@ -85,7 +100,7 @@ void *gethead_chk (caq_t const *restrict q) {
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
 void *gettail (caq_t const *restrict q) {
-   /*error_check (isempty (q) != false) return NULL;*/
+   assert (! isempty (q));
    return index_array (&(q->array), (q->tail - 1) % q->array.n);
 }
 
@@ -160,13 +175,20 @@ void ez_free_caq (caq_t *restrict caq) {
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
 size_t used_space_caq (caq_t const *restrict caq) {
-   if (caq->head <= caq->tail) return caq->tail - caq->head;
-   caq->tail + 1 + (caq->array.n - caq->head);
+   size_t ret;
+   if (caq->head <= caq->tail)
+      ret = caq->tail - caq->head;
+   else
+      ret = caq->tail + 1 + (caq->array.n - caq->head);
+   assert (ret <= caq->array.n - 1);
+   return ret;
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
 size_t remaining_space_caq (caq_t const *restrict caq) {
-   return caq->array.n - used_space_caq (caq) - 1;
+   size_t ret = caq->array.n - used_space_caq (caq) - 1;
+   assert (ret <= caq->array.n - 1);
+   return ret;
 }
 
 __attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
@@ -219,7 +241,8 @@ ssize_t indexOf_caq_chk (caq_t const *restrict caq,
    if (ret >= 0) return ret;
    init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
    ret = indexOf_array_chk (&tmp, e);
-   assert (ret == (ssize_t) -1 || ret < (ssize_t) caq->n);
+   assert (ret == (ssize_t) -1 || ret < (ssize_t) caq->array.n);
+   assert (ret == (ssize_t) -1 || ret < (ssize_t) remaining_space_caq (caq));
    return ret;
 }
 
