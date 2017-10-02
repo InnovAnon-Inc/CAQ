@@ -47,6 +47,7 @@ static int caq_add_test (void *restrict arg_) {
    if (isfull (arg)) return 0;
    tmp = random_range_java (-10, 10);
    enqueue (arg, &tmp);
+   dumpq (arg);
    return 0;
 }
 
@@ -56,6 +57,7 @@ static int caq_remove_test (void *restrict arg_) {
    int tmp;
    if (isempty (arg)) return 0;
    dequeue (arg, &tmp);
+   dumpq (arg);
    return 0;
 }
 
@@ -72,6 +74,7 @@ static int caq_adds_test (void *restrict arg_) {
       n = random_range_java_size_t2 ((size_t) 0, n);
    ez_random_ranges (tmps, n, -10, 10);
    enqueues (arg, tmps, n);
+   dumpq (arg);
    return 0;
 }
 
@@ -86,6 +89,7 @@ static int caq_removes_test (void *restrict arg_) {
    if (n != 0)
       n = random_range_java_size_t2 ((size_t) 0, n);
    dequeues (arg, tmps, n);
+   dumpq (arg);
    return 0;
 }
 
@@ -118,6 +122,7 @@ static void caq_free (void *restrict arg_) {
 __attribute__ ((nonnull (1), nothrow))
 static void dumpq(caq_t const *restrict q) {
    size_t i;
+   fputs ("Q: ", stderr);
    for (i = 0; i != used_space_caq (q); i++) {
       void *restrict head = index_caq (q, i);
       fprintf (stderr, "head: %d, ", *(int *restrict) head);
