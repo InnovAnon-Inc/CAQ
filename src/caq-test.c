@@ -37,7 +37,7 @@ static void dumpq(caq_t const *restrict q) {
    fputs ("Q: ", stderr);
    for (i = 0; i != used_space_caq (q); i++) {
       void *restrict head = index_caq (q, i);
-      fprintf (stderr, "%2d: %3d, ", (int) i, *(int *restrict) head);
+      fprintf (stderr, "(%2d:%3d), ", (int) i, *(int *restrict) head);
    }
    fputs ("\n", stderr);
 }
