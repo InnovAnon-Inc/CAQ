@@ -149,7 +149,7 @@ caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
 
 __attribute__ ((leaf, nonnull (1), nothrow))
 void ez_free_caq (caq_t *restrict caq) {
-   free_queue (caq);
+   /*free_queue (caq);*/
 	#pragma GCC diagnostic push
 	#pragma GCC diagnostic ignored "-Wstrict-aliasing"
    mfree2 ((void *restrict) caq);
