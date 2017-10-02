@@ -78,12 +78,26 @@ int dequeue_chk (caq_t *restrict q, void *restrict e) {
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
 bool isempty (caq_t const *restrict q) {
-   return q->head == q->tail;
+   if (q->head == q->tail) {
+      assert (used_space_caq (q) == 0);
+      assert (remaining_space_caq (q) == q->array.n - 1);
+      return true;
+   }
+   assert (used_space_caq (q) > 0);
+   assert (remaining_space_caq (q) < q->array.n - 1);
+   return false;
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
 bool isfull (caq_t const *restrict q) {
-   return q->head == (q->tail + 1) % q->array.n;
+   if (q->head == (q->tail + 1) % q->array.n) {
+      assert (used_space_caq (q) == q->array.n - 1);
+      assert (remaining_space_caq (q) == 0);
+      return true;
+   }
+   assert (used_space_caq (q) < q->array.n - 1);
+   assert (remaining_space_caq (q) > 0);
+   return false;
 }
 
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
@@ -179,14 +193,14 @@ size_t used_space_caq (caq_t const *restrict caq) {
    if (caq->head <= caq->tail)
       ret = caq->tail - caq->head;
    else
-      ret = caq->tail + 1 + (caq->array.n - caq->head);
+      ret = caq->tail /*+ 1*/ + (caq->array.n - caq->head);
    assert (ret <= caq->array.n - 1);
    return ret;
 }
 
 __attribute__ ((nonnull (1), nothrow, pure, warn_unused_result))
 size_t remaining_space_caq (caq_t const *restrict caq) {
-   size_t ret = caq->array.n - used_space_caq (caq) - 1;
+   size_t ret = caq->array.n - 1 - used_space_caq (caq);
    assert (ret <= caq->array.n - 1);
    return ret;
 }
