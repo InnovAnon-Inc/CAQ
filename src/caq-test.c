@@ -171,6 +171,7 @@ int main(void) {
    alloc_t alloc_arg;
 
    caq_t tmp;
+   int i, j, k;
 
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
 
@@ -179,7 +180,6 @@ int main(void) {
 
 
 /*
- * int i, j, k;
    for (k = 1; k != 20; k++) {
       for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
