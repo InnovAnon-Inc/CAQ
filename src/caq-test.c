@@ -118,7 +118,8 @@ static int caq_cb (void *restrict arg) {
    /*assert (ARRSZ (tests) == 2);*/
 
 
-   error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
+   /*error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)*/
+   error_check (random_ops2 (arg, tests, ARRSZ (tests)) != 0)
       return -1;
 
    return 0;
