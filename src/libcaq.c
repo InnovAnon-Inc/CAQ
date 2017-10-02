@@ -2,6 +2,7 @@
 #include <config.h>
 #endif
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -213,7 +214,7 @@ ssize_t indexOf_caq_chk (caq_t const *restrict caq,
          caq->tail - caq->head);
       return indexOf_array_chk (&tmp, e);
    }
-   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - head);
+   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
    ret = indexOf_array_chk (&tmp, e);
    if (ret >= 0) return ret;
    init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
