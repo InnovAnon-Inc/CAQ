@@ -122,7 +122,7 @@ static void dumpq(caq_t const *restrict q) {
       void *restrict head = index_caq (q, i);
       fprintf (stderr, "head: %d, ", *(int *restrict) head);
    }
-   fputs ("", stderr);
+   fputs ("\n", stderr);
 }
 
 
