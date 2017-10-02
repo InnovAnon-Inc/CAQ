@@ -233,10 +233,12 @@ int main(void) {
          N[i] = i;
 
       enqueues (&tmp, N, (size_t) 10);
+      dumpq (&tmp);
       assert (isfull (&tmp));
       assert (remaining_space_caq (&tmp) == (size_t) (0));
       assert (used_space_caq (&tmp) == (size_t) (10));
       dequeues (&tmp, N, (size_t) 10);
+      dumpq (&tmp);
       assert (isempty (&tmp));
       assert (remaining_space_caq (&tmp) == (size_t) 10);
       assert (used_space_caq (&tmp) == (size_t) 0);
