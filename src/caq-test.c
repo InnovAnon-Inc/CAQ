@@ -162,7 +162,7 @@ int main(void) {
 
    time_t t;
    alloc_t alloc_arg;
-   /*
+
    caq_t tmp;
 
    int i;
@@ -173,7 +173,7 @@ int main(void) {
       assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
    }
    free_queue (&tmp);
-   */
+
    t = time (NULL);
    srand ((unsigned int) t);
 
