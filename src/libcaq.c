@@ -272,7 +272,7 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
    size_t chk_used = used_space_caq (q);
 #endif
    size_t diff = q->array.n - q->tail;
-   assert (! isfull (q));
+   assert (n == 0 || ! isfull (q));
    assert (remaining_space_caq (q) >= n);
    if (q->head > q->tail || n <= diff)
       sets_array (&(q->array), q->tail, e, n);
@@ -305,7 +305,7 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
    size_t chk_used = used_space_caq (q);
 #endif
    size_t diff = q->array.n - q->head;
-   assert (! isempty (q));
+   assert (n == 0 || ! isempty (q));
    assert (used_space_caq (q) >= n);
    if (q->tail > q->head || n <= diff)
       sets_array (&(q->array), q->head, e, n);
