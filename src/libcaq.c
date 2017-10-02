@@ -265,20 +265,20 @@ void *index_caq (caq_t const *restrict caq, size_t i) {
    return index_array (&(caq->array), (caq->head + i) % caq->array.n);
 }
 
-TODO ()
 __attribute__ ((leaf, nonnull (1, 2), nothrow))
 void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
 #ifndef NDEBUG
    size_t chk_rem  = remaining_space_caq (q);
    size_t chk_used = used_space_caq (q);
 #endif
+   size_t diff = q->array.n - q->tail;
    assert (! isfull (q));
-   if (q->head > q->tail || n <= q->array.n)
+   assert (remaining_space_caq (q) >= n);
+   if (q->head > q->tail || n <= diff)
       sets_array (&(q->array), q->tail, e, n);
    else {
-      size_t diff = q->array.n - q->tail;
       sets_array (&(q->array), q->tail, e, diff);
-      sets_array (&(q->array), 0, e, n - diff);
+      sets_array (&(q->array), (size_t) 0, e, n - diff);
    }
    /*
    if (q->head <= q->tail) {
@@ -296,4 +296,24 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
    q->tail = (q->tail + n) % q->array.n;
    assert (chk_rem  - n == remaining_space_caq (q));
    assert (chk_used + n == used_space_caq      (q));
+}
+
+__attribute__ ((leaf, nonnull (1, 2), nothrow))
+void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
+#ifndef NDEBUG
+   size_t chk_rem  = remaining_space_caq (q);
+   size_t chk_used = used_space_caq (q);
+#endif
+   size_t diff = q->array.n - q->head;
+   assert (! isempty (q));
+   assert (used_space_caq (q) >= n);
+   if (q->tail > q->head || n <= diff)
+      sets_array (&(q->array), q->head, e, n);
+   else {
+      sets_array (&(q->array), q->head, e, diff);
+      sets_array (&(q->array), 0, e, n - diff);
+   }
+   q->head = (q->head + n) % q->array.n;
+   assert (chk_rem  + n == remaining_space_caq (q));
+   assert (chk_used - n == used_space_caq      (q));
 }
