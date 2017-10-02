@@ -46,6 +46,7 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
+   fprintf (stderr, "caq_add_test\n");
    if (isfull (arg)) return 0;
    fprintf (stderr, "a\n");
    tmp = random_range_java (-10, 10);
@@ -59,6 +60,7 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
+   fprintf (stderr, "caq_remove_test\n");
    if (isempty (arg)) return 0;
    fprintf (stderr, "d\n");
    dequeue (arg, &tmp);
@@ -72,7 +74,9 @@ static int caq_adds_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t i;
-   size_t n = min (ARRSZ (tmps), remaining_space_caq (arg));
+   size_t n;
+   fprintf (stderr, "caq_adds_test\n");
+   n = min (ARRSZ (tmps), remaining_space_caq (arg));
    /*if (n == 0) return 0;*/
    fprintf (stderr, "f\n");
    if (n != 0)
@@ -89,7 +93,9 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_removes_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
-   size_t n = min (ARRSZ (tmps), used_space_caq (arg));
+   size_t n;
+   fprintf (stderr, "caq_removes_test\n");
+   n = min (ARRSZ (tmps), used_space_caq (arg));
    /*if (n == 0) return 0;*/
    fprintf (stderr, "j\n");
    if (n != 0)
