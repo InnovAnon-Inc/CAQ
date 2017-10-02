@@ -50,10 +50,13 @@ static int caq_add_test (void *restrict arg_) {
    fprintf (stderr, "caq_add_test\n");
 
    if (isfull (arg)) return 0;
+
    fprintf (stderr, "a\n");
    tmp = random_range_java (-10, 10);
    fprintf (stderr, "b\n");
+
    enqueue (arg, &tmp);
+
    fprintf (stderr, "c\n");
 
    return 0;
@@ -115,7 +118,7 @@ static int caq_removes_test (void *restrict arg_) {
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_cb (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
-   unsigned int ntest = 10;
+   unsigned int ntest = 1;
    unsigned int i;
    size_t j;
    stdcb_t tests[2];
