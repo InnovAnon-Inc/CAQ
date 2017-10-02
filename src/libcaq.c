@@ -141,7 +141,7 @@ __attribute__ ((leaf, nonnull (1), nothrow))
 void ez_free_caq (caq_t *restrict caq) {
 	#pragma GCC diagnostic push
 	#pragma GCC diagnostic ignored "-Wstrict-aliasing"
-   mfree ((void *restrict) &caq);
+   mfree (/*(void *restrict)*/ &caq);
 	#pragma GCC diagnostic pop
    free (caq);
 }
