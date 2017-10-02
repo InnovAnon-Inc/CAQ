@@ -115,7 +115,14 @@ static void caq_free (void *restrict arg_) {
 
 
 
-
+__attribute__ ((nonnull (1), nothrow))
+static void dumpq(caq_t const *restrict q) {
+   size_t i;
+   for (i = 0; i != used_space_caq (q); i++) {
+      void *restrict head = index_caq (q, i);
+      fprintf (stderr, "head: %d\n", *(int *restrict) head);
+   }
+}
 
 
 
@@ -165,8 +172,13 @@ int main(void) {
 
    caq_t tmp;
 
-   int i, j, k;
    error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
+
+
+
+
+   int i, j, k;
+/*
    for (k = 1; k != 20; k++) {
       for (i = 0; i != 10 - 10 % k; i++) {
          assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
@@ -187,11 +199,33 @@ int main(void) {
          assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
       }
       assert (isempty (&tmp));
-      /*assert (remaining_space_caq (&tmp) == 10 - k);
-      assert (used_space_caq (&tmp) == k - 0);*/
       assert (remaining_space_caq (&tmp) == (size_t) 10);
       assert (used_space_caq (&tmp) == (size_t) 0);
    }
+*/
+   for (i = 0; i != 10; i++) {
+         assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
+         assert (used_space_caq (&tmp) == (size_t) i);
+         enqueue (&tmp, &i);
+         assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
+         assert (used_space_caq (&tmp) == (size_t) (i + 1));
+      }
+      assert (isfull (&tmp));
+      assert (remaining_space_caq (&tmp) == (size_t) (10 - (k)));
+      assert (used_space_caq (&tmp) == (size_t) ((k) - 0));
+      for (i = 0; i != 10 - 10 % k; i++) {
+         assert (remaining_space_caq (&tmp) == (size_t) i);
+         assert (used_space_caq (&tmp) == (size_t) (10 - i));
+         dequeue (&tmp, &j);
+         assert (j == i);
+         assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
+         assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
+      }
+      assert (isempty (&tmp));
+      assert (remaining_space_caq (&tmp) == (size_t) 10);
+      assert (used_space_caq (&tmp) == (size_t) 0);
+
+
    free_queue (&tmp);
 
    t = time (NULL);
