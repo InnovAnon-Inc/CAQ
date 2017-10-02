@@ -232,11 +232,11 @@ int main(void) {
       for (i = 0; i != 10; i++)
          N[i] = i;
 
-      enqueues (&tmp, N, 10);
+      enqueues (&tmp, N, (size_t) 10);
       assert (isfull (&tmp));
       assert (remaining_space_caq (&tmp) == (size_t) (0));
       assert (used_space_caq (&tmp) == (size_t) (10));
-      dequeues (&tmp, N, 10);
+      dequeues (&tmp, N, (size_t) 10);
       assert (isempty (&tmp));
       assert (remaining_space_caq (&tmp) == (size_t) 10);
       assert (used_space_caq (&tmp) == (size_t) 0);
