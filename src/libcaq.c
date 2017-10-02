@@ -214,7 +214,7 @@ size_t indexOf_caq (caq_t const *restrict caq,
    ssize_t r;
    array_t tmp;
    if (caq->head <= caq->tail) {
-      init_array (&tmp, caq->array.data, caq->array.esz,
+      init_array2 (&tmp, &(caq->array), caq->head,
          caq->tail - caq->head);
       return indexOf_array (&tmp, e);
    }
@@ -230,7 +230,7 @@ bool contains_caq (caq_t const *restrict caq,
 	void const *restrict e) {
    array_t tmp;
    if (caq->head <= caq->tail) {
-      init_array (&tmp, caq->array.data, caq->array.esz,
+      init_array2 (&tmp, &(caq->array), caq->head,
          caq->tail - caq->head);
       return contains_array (&tmp, e);
    }
@@ -246,7 +246,7 @@ ssize_t indexOf_caq_chk (caq_t const *restrict caq,
    ssize_t ret;
    array_t tmp;
    if (caq->head <= caq->tail) {
-      init_array (&tmp, caq->array.data, caq->array.esz,
+      init_array2 (&tmp, &(caq->array), caq->head,
          caq->tail - caq->head);
       return indexOf_array_chk (&tmp, e);
    }
@@ -317,3 +317,29 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
    assert (chk_rem  + n == remaining_space_caq (q));
    assert (chk_used - n == used_space_caq      (q));
 }
+
+#ifdef TEST
+__attribute__ ((leaf, nonnull (1), nothrow))
+void frees_caq (caq_t const *restrict caq, free_t f) {
+   size_t ret;
+   if (caq->head <= caq->tail)
+
+      ret = caq->tail - caq->head;
+   else
+      ret = caq->tail /*+ 1*/ + (caq->array.n - caq->head);
+   assert (ret <= caq->array.n - 1);
+
+
+
+   if (caq->head <= caq->tail) {
+      init_array (&tmp, caq->array.data, caq->array.esz,
+         caq->tail - caq->head);
+      return indexOf_array_chk (&tmp, e);
+   }
+   init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
+   ret = indexOf_array_chk (&tmp, e);
+   if (ret >= 0) return ret;
+   init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
+   return ret;
+}
+#endif

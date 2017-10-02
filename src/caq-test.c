@@ -60,6 +60,7 @@ static int caq_add_test (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
    if (isfull (arg)) return TEST_NA;
+   /* alloc tmp */
    tmp = random_range_java (-10, 10);
    enqueue (arg, &tmp);
    dumpq (arg);
@@ -72,6 +73,7 @@ static int caq_remove_test (void *restrict arg_) {
    int tmp;
    if (isempty (arg)) return TEST_NA;
    dequeue (arg, &tmp);
+   /*free tmp*/
    dumpq (arg);
    return 0;
 }
@@ -86,6 +88,7 @@ static int caq_adds_test (void *restrict arg_) {
    /*if (n == 0) return 0;*/
    if (n != 0)
       n = random_range_java_size_t2 ((size_t) 0, n);
+   /* alloc tmps */
    ez_random_ranges (tmps, n, -10, 10);
    enqueues (arg, tmps, n);
    dumpq (arg);
@@ -102,6 +105,7 @@ static int caq_removes_test (void *restrict arg_) {
    if (n != 0)
       n = random_range_java_size_t2 ((size_t) 0, n);
    dequeues (arg, tmps, n);
+   /* free tmps */
    dumpq (arg);
    return 0;
 }
@@ -128,6 +132,7 @@ static int caq_cb (void *restrict arg) {
 __attribute__ ((nonnull (1), nothrow))
 static void caq_free (void *restrict arg_) {
    caq_t *restrict arg = (caq_t *restrict) arg_;
+   /* frees_caq () */
    ez_free_caq (arg);
 }
 
