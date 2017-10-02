@@ -94,11 +94,7 @@ static int caq_removes_test (void *restrict arg_) {
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static int caq_cb (void *restrict arg_) {
-   caq_t *restrict arg = (caq_t *restrict) arg_;
-   unsigned int ntest = 10;
-   unsigned int i;
-   size_t j;
+static int caq_cb (void *restrict arg) {
    stdcb_t tests[2];
 
    TODO (more tests)
@@ -108,14 +104,8 @@ static int caq_cb (void *restrict arg_) {
    tests[3] = caq_removes_test;*/
    /*assert (ARRSZ (tests) == 2);*/
 
-   for (i = 0; i != ntest; i++) {
-      j = random_range_java_size_t2 ((size_t) 0, ARRSZ (tests) - 1);
-      assert (j <= ARRSZ (tests));
-      /*assert (j != 0 || tests[j] == caq_add_test);
-      assert (j != 1 || tests[j] == caq_remove_test);
-      assert (j == 0 || j == 1);*/
-      error_check (tests[j] (arg) != 0) return -1;
-   }
+   error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
+      return -1;
 
    return 0;
 }
