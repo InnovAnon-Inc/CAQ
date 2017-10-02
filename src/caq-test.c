@@ -119,7 +119,7 @@ static int caq_cb (void *restrict arg_) {
    unsigned int i;
    size_t j;
    stdcb_t tests[2];
-#ifdef WTF
+
    TODO (more tests)
    tests[0] = caq_add_test;
    tests[1] = caq_remove_test;
@@ -134,7 +134,7 @@ static int caq_cb (void *restrict arg_) {
       error_check (tests[j] (arg) != 0) return -1;
       fprintf (stderr, "o\n");
    }
-#endif
+
    return 0;
 }
 
