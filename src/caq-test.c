@@ -120,8 +120,9 @@ static void dumpq(caq_t const *restrict q) {
    size_t i;
    for (i = 0; i != used_space_caq (q); i++) {
       void *restrict head = index_caq (q, i);
-      fprintf (stderr, "head: %d\n", *(int *restrict) head);
+      fprintf (stderr, "head: %d, ", *(int *restrict) head);
    }
+   fputs ("", stderr);
 }
 
 
