@@ -168,21 +168,25 @@ size_t remaining_space_caq (caq_t const *restrict caq) {
    return caq->array.n - used_space_caq (caq) - 1;
 }
 
-#ifdef TEST
 __attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
 size_t indexOf_caq (caq_t const *restrict caq,
 	void const *restrict e) {
    /* check from head to tail */
    /* or check from head to end, then from 0 to tail */
-
-
    size_t n = cheap->array.n;
    size_t ret;
-   cheap->array.n = cheap->n;
-   ret = indexOf_array (cheap, e);
-   cheap->array.n = n;
-   assert (ret < cheap->n);
-   return ret;
+   ssize_t r;
+   array_t tmp;
+   if (caq->head <= caq->tail) {
+      init_array (&tmp, caq->array.data, caq->array.esz,
+         caq->tail - caq->head);
+      return indexOf_array (&tmp, e);
+   }
+   init_array2 (&tmp, &(caq->array), caq->tail, caq->array.n - tail);
+   r = indexOf_array_chk (&tmp, e);
+   if (r >= 0) return (size_t) r;
+   init_array2 (&tmp, &(caq->array), 0, caq->head);
+   return indexOf_array (&tmp, e);
 }
 
 __attribute__ ((leaf, nonnull (1, 2), nothrow, pure, warn_unused_result))
@@ -207,5 +211,11 @@ ssize_t indexOf_cheap_chk (cheap_t const *restrict cheap,
 __attribute__ ((leaf, nonnull (1), nothrow, pure, returns_nonnull, warn_unused_result))
 void *index_cheap (cheap_t const *restrict cheap, size_t i) {
    return index_array (&(cheap->array), (caq->head + i) % caq->array.n);
+}
+
+__attribute__ ((leaf, nonnull (1, 2), nothrow))
+void enqueue (caq_t *restrict q, void const *restrict e) {
+   set_array (&(q->array), q->tail, e);
+   q->tail = (q->tail + 1) % q->array.n;
 }
 #endif
