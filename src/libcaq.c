@@ -25,7 +25,7 @@ __attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int alloc_queue (
    caq_t *restrict q,
    size_t esz, size_t n) {
-   error_check (alloc_array (&(q->array), esz, n + 1) =!= 0) return -1;
+   error_check (alloc_array (&(q->array), esz, n + 1) != 0) return -1;
    q->head = 0;
    q->tail = 0;
    return 0;
