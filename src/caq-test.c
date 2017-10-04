@@ -62,6 +62,18 @@ static void caq_generate (void *restrict arg_) {
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
+static bool caq_isfull (void *restrict arg_) {
+   caq_t *restrict arg = (caq_t *restrict) arg_;
+   return isfull (arg);
+}
+
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
+static bool caq_isempty (void *restrict arg_) {
+   caq_t *restrict arg = (caq_t *restrict) arg_;
+   return isempty (arg);
+}
+
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
 #ifdef TEST
    caq_t *restrict arg = (caq_t *restrict) arg_;
@@ -74,7 +86,7 @@ static int caq_add_test (void *restrict arg_) {
    return 0;
 #endif
    int tmp;
-   return add_test (arg_, &tmp, isfull, caq_generate, enqueue);
+   return add_test (arg_, &tmp, caq_isfull, caq_generate, enqueue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -89,7 +101,7 @@ static int caq_remove_test (void *restrict arg_) {
    return 0;
 #endif
    int tmp;
-   return remove_test (arg_, &tmp, isempty, dequeue);
+   return remove_test (arg_, &tmp, caq_isempty, dequeue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -299,8 +311,6 @@ int main(void) {
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;
 
-   error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
-      return -1;
 
 /*
    wtf = caq_alloc (&alloc_arg);
