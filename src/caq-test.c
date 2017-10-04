@@ -12,24 +12,6 @@
 #include <simon.h>
 
 #include <caq.h>
-/*
-typedef __attribute__ ((warn_unused_result))
-void *(*do_alloc_t) (void *restrict) ;
-
-typedef __attribute__ ((nonnull (1)))
-void (*do_free_t) (void *restrict) ;
-
-__attribute__ ((nonnull (1, 3, 4), nothrow, warn_unused_result))
-static int ezmalloc (do_alloc_t do_alloc, void *restrict alloc_args,
-   stdcb_t cb, do_free_t do_free) {
-   void *restrict ds = do_alloc (alloc_args);
-   error_check (ds == NULL) return -1;
-   error_check (cb (ds) != 0) return -2;
-   do_free (ds);
-   return 0;
-}
-*/
-
 
 __attribute__ ((nonnull (1), nothrow))
 static void dumpq(caq_t const *restrict q) {
@@ -41,8 +23,6 @@ static void dumpq(caq_t const *restrict q) {
    }
    fputs ("\n", stderr);
 }
-
-
 
 typedef struct {
    size_t esz;
@@ -56,107 +36,65 @@ static void *caq_alloc (void const *restrict arg_) {
 }
 
 __attribute__ ((nonnull (1), nothrow))
-static void caq_generate (void *restrict arg_) {
+static void generate_int (void *restrict arg_) {
    int *restrict arg = (int *restrict) arg_;
    *arg = random_range_java (-10, 10);
 }
 
 __attribute__ ((nonnull (1), nothrow))
-static void caq_generates (void *restrict arg_, size_t n) {
+static void generates_int (void *restrict arg_, size_t n) {
    int *restrict arg = (int *restrict) arg_;
    size_t i;
    for (i = 0; i != n; i++)
       arg[i] = random_range_java (-10, 10);
 }
 
-#ifdef TEST
-__attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static bool caq_isfull (void const *restrict arg_) {
-   caq_t const *restrict arg = (caq_t const *restrict) arg_;
-   return isfull (arg);
-}
-
-__attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static bool caq_isempty (void const *restrict arg_) {
-   caq_t const *restrict arg = (caq_t const *restrict) arg_;
-   return isempty (arg);
-}
-#endif
-
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
-#ifdef TEST
-   caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
-   if (isfull (arg)) return TEST_NA;
-   /* alloc tmp */
-   tmp = random_range_java (-10, 10);
-   enqueue (arg, &tmp);
-   dumpq (arg);
+   int err;
+   error_check (add_test (arg_, &tmp,
+      (isfull_t) isfull, generate_int, (add_t) enqueue) != 0)
+      return -1;
+   fprintf (stderr, "caq_add_test (), tmp:%d\n", tmp);
+   dumpq ((caq_t *restrict) arg_);
    return 0;
-#endif
-   int tmp;
-   return add_test (arg_, &tmp,
-      (isfull_t) isfull, (generate_t) caq_generate, (add_t) enqueue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
-#ifdef TEST
-   caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
-   if (isempty (arg)) return TEST_NA;
-   dequeue (arg, &tmp);
-   /*free tmp*/
-   dumpq (arg);
+   error_check (remove_test (arg_, &tmp,
+      (isempty_t) isempty, (remove_t) dequeue) != 0)
+      return -1;
+   fprintf (stderr, "caq_remove_test (), tmp:%d\n", tmp);
+   dumpq ((caq_t *restrict) arg_);
    return 0;
-#endif
-   int tmp;
-   return remove_test (arg_, &tmp,
-      (isempty_t) isempty, (remove_t) dequeue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_adds_test (void *restrict arg_) {
-#ifdef TEST
-   caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
-   size_t i;
-   size_t n;
-   n = min (ARRSZ (tmps), remaining_space_caq (arg));
-   /*if (n == 0) return 0;*/
-   if (n != 0)
-      n = random_range_java_size_t2 ((size_t) 0, n);
-   /* alloc tmps */
-   ez_random_ranges (tmps, n, -10, 10);
-   enqueues (arg, tmps, n);
-   dumpq (arg);
-   return 0;
-#endif
-   int tmps[10];
-   return adds_test (arg_, tmps, ARRSZ (tmps),
+   error_check (adds_test (arg_, tmps, ARRSZ (tmps),
       (remaining_space_t) remaining_space_caq,
-      (generates_t) caq_generates, (adds_t) enqueues);
+      caq_generates, (adds_t) enqueues) != 0)
+      return -1;
+   /* can't print tmps, because we don't know how many elements are init'd */
+   fprintf (stderr, "caq_adds_test ()\n");
+   dumpq ((caq_t *restrict) arg_);
+   return 0;
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_removes_test (void *restrict arg_) {
-#ifdef TEST
-   caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
-   size_t n;
-   n = min (ARRSZ (tmps), used_space_caq (arg));
-   /*if (n == 0) return 0;*/
-   if (n != 0)
-      n = random_range_java_size_t2 ((size_t) 0, n);
-   dequeues (arg, tmps, n);
-   /* free tmps */
-   dumpq (arg);
+   error_check (removes_test (arg_, tmps, ARRSZ (tmps),
+      (used_space_t) used_space_caq, (removes_t) dequeues) != 0)
+      return -1;
+   /* can't print tmps, because we don't know how many elements are init'd */
+   fprintf (stderr, "caq_removes_test ()\n");
+   dumpq ((caq_t *restrict) arg_);
    return 0;
-#endif
-   int tmps[10];
-   return removes_test (arg_, tmps, ARRSZ (tmps),
-      (used_space_t) used_space_caq, (removes_t) dequeues);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
