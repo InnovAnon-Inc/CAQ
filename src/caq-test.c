@@ -38,7 +38,7 @@ static void *caq_alloc (void const *restrict arg_) {
 __attribute__ ((nonnull (1), nothrow))
 static void generate_int (void *restrict arg_) {
    int *restrict arg = (int *restrict) arg_;
-   *arg = random_range_java (-10, 10);
+   *arg = random_range_java (-10, 10); /* arbitrary params */
 }
 
 __attribute__ ((nonnull (1), nothrow))
@@ -46,7 +46,7 @@ static void generates_int (void *restrict arg_, size_t n) {
    int *restrict arg = (int *restrict) arg_;
    size_t i;
    for (i = 0; i != n; i++)
-      arg[i] = random_range_java (-10, 10);
+      arg[i] = random_range_java (-10, 10); /* arbitrary params */
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -75,7 +75,7 @@ static int caq_remove_test (void *restrict arg_) {
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_adds_test (void *restrict arg_) {
-   int tmps[10];
+   int tmps[13]; /* arbitrary params */
    error_check (adds_test (arg_, tmps, ARRSZ (tmps),
       (remaining_space_t) remaining_space_caq,
       generates_int, (adds_t) enqueues) != 0)
@@ -88,7 +88,7 @@ static int caq_adds_test (void *restrict arg_) {
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_removes_test (void *restrict arg_) {
-   int tmps[10];
+   int tmps[12]; /* arbitrary params */
    error_check (removes_test (arg_, tmps, ARRSZ (tmps),
       (used_space_t) used_space_caq, (removes_t) dequeues) != 0)
       return -1;
@@ -107,177 +107,28 @@ static int caq_cb (void *restrict arg) {
    tests[1] = caq_remove_test;
    tests[2] = caq_adds_test;
    tests[3] = caq_removes_test;
-   /*assert (ARRSZ (tests) == 2);*/
 
-
-   error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
+   error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0) /* arbitrary params */
    /*random_ops2 (arg, tests, ARRSZ (tests));*/
       return -1;
 
    return 0;
 }
 
-__attribute__ ((nonnull (1), nothrow))
-static void caq_free (void *restrict arg_) {
-   caq_t *restrict arg = (caq_t *restrict) arg_;
-   /* frees_caq () */
-   ez_free_caq (arg);
-}
-
-
-
-
-
-
-
-
-/*#define N (4)*/
-
 int main(void) {
-#ifdef TEST
-   int arr[] = {101, 202, 303, 404, 505};
-   int *tmp;
-
-   caq_t q;
-   error_check (alloc_queue (&q, sizeof (int), (size_t) N) != 0)
-      return EXIT_FAILURE;
-
-   dumpq(&q, 1);
-   *(int*)enqueue(&q) = arr[0];dumpq(&q, 2);
-   *(int*)enqueue(&q) = arr[1];dumpq(&q, 3);
-   *(int*)enqueue(&q) = arr[2];dumpq(&q, 4);
-   tmp = enqueue(&q);
-   if (tmp != NULL) *tmp = arr[3];
-   dumpq(&q, 5);
-   tmp = enqueue(&q);
-   if (tmp != NULL) *tmp= arr[4];
-   dumpq(&q, 6);
-   memset (arr, 0, sizeof (arr));
-   printf("%i\n", *(int *) dequeue(&q));
-      dumpq(&q, 7);
-   printf("%i\n", *(int *) dequeue(&q));
-      dumpq(&q, 8);
-   printf("%i\n", *(int *) dequeue(&q));
-      dumpq(&q, 9);
-   tmp = (int *) dequeue (&q);
-   if (tmp == NULL) puts ("NULL");
-   else printf("%i\n", *tmp);
-      dumpq(&q, 10);
-   tmp = (int *) dequeue (&q);
-   if (tmp == NULL) puts ("NULL");
-   else printf ("%i\n", *tmp);
-      dumpq(&q, 11);
-
-   free_queue (&q);
-#endif
-
-
    time_t t;
    alloc_t alloc_arg;
 
-#ifdef TESTING
-   caq_t tmp;
-   int i, j, k;
-   int N[10];
-
-   error_check (alloc_queue (&tmp, sizeof (int), (size_t) 10) != 0) return -1;
-
-
-
-
-
-/*
-   for (k = 1; k != 20; k++) {
-      for (i = 0; i != 10 - 10 % k; i++) {
-         assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
-         assert (used_space_caq (&tmp) == (size_t) i);
-         enqueue (&tmp, &i);
-         assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
-         assert (used_space_caq (&tmp) == (size_t) (i + 1));
-      }
-      assert (10 % k != 0 || isfull (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) (10 - (10 - 10 % k)));
-      assert (used_space_caq (&tmp) == (size_t) ((10 - 10 % k) - 0));
-      for (i = 0; i != 10 - 10 % k; i++) {
-         assert (remaining_space_caq (&tmp) == (size_t) i);
-         assert (used_space_caq (&tmp) == (size_t) (10 - i));
-         dequeue (&tmp, &j);
-         assert (j == i);
-         assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
-         assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
-      }
-      assert (isempty (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) 10);
-      assert (used_space_caq (&tmp) == (size_t) 0);
-   }
-*/
-
-   for (i = 0; i != 10; i++) {
-         assert (remaining_space_caq (&tmp) == (size_t) (10 - i));
-         assert (used_space_caq (&tmp) == (size_t) i);
-         enqueue (&tmp, &i);
-         dumpq (&tmp);
-         assert (remaining_space_caq (&tmp) == (size_t) (10 - i - 1));
-         assert (used_space_caq (&tmp) == (size_t) (i + 1));
-      }
-      assert (isfull (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) (0));
-      assert (used_space_caq (&tmp) == (size_t) (10));
-      for (i = 0; i != 10; i++) {
-         assert (remaining_space_caq (&tmp) == (size_t) i);
-         assert (used_space_caq (&tmp) == (size_t) (10 - i));
-         dequeue (&tmp, &j);
-         dumpq (&tmp);
-         assert (j == i);
-         assert (remaining_space_caq (&tmp) == (size_t) (i + 1));
-         assert (used_space_caq (&tmp) == (size_t) (10 - i - 1));
-      }
-      assert (isempty (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) 10);
-      assert (used_space_caq (&tmp) == (size_t) 0);
-
-      for (i = 0; i != 10; i++)
-         N[i] = i;
-
-      enqueues (&tmp, N, (size_t) 10);
-      dumpq (&tmp);
-      assert (isfull (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) (0));
-      assert (used_space_caq (&tmp) == (size_t) (10));
-      dequeues (&tmp, N, (size_t) 10);
-      dumpq (&tmp);
-      assert (isempty (&tmp));
-      assert (remaining_space_caq (&tmp) == (size_t) 10);
-      assert (used_space_caq (&tmp) == (size_t) 0);
-
-      for (i = 0; i != 10; i++)
-         assert (N[i] == i);
-
-   free_queue (&tmp);
-#endif
    t = time (NULL);
    srand ((unsigned int) t);
 
    alloc_arg.esz = sizeof (int);
-   alloc_arg.n   = 10;
+   alloc_arg.n   = 10; /* arbitrary params */
 
    error_check (ezmalloc (caq_alloc, &alloc_arg,
       caq_cb,
       (do_free_t) ez_free_caq) != 0)
-      return -1;
+      return EXIT_FAILURE;
 
-
-/*
-   wtf = caq_alloc (&alloc_arg);
-   error_check (wtf == NULL) return -1;
-   error_check (caq_cb (wtf) != 0) return -2;
-   caq_free (wtf);
-*/
-/*
-   wtf = ez_alloc_caq (sizeof (int), (size_t) 10);
-   error_check (wtf == NULL) return -1;
-   ez_free_caq (wtf);
-*/
    return EXIT_SUCCESS;
 }
-
