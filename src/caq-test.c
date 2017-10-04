@@ -262,7 +262,7 @@ int main(void) {
 
    error_check (ezmalloc (caq_alloc, &alloc_arg,
       caq_cb,
-      (do_free_t) ez_free_caq) != 0)
+      /*(do_free_t) ez_free_caq*/ caq_free) != 0)
       return -1;
 
 
