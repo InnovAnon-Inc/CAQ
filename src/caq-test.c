@@ -77,7 +77,7 @@ static int caq_adds_test (void *restrict arg_) {
    int tmps[10];
    error_check (adds_test (arg_, tmps, ARRSZ (tmps),
       (remaining_space_t) remaining_space_caq,
-      caq_generates, (adds_t) enqueues) != 0)
+      generates_int, (adds_t) enqueues) != 0)
       return -1;
    /* can't print tmps, because we don't know how many elements are init'd */
    fprintf (stderr, "caq_adds_test ()\n");
@@ -260,7 +260,7 @@ int main(void) {
    alloc_arg.esz = sizeof (int);
    alloc_arg.n   = 10;
 
-   error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
+   error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, ez_free_caq) != 0)
       return -1;
 
 
