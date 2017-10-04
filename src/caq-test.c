@@ -260,7 +260,9 @@ int main(void) {
    alloc_arg.esz = sizeof (int);
    alloc_arg.n   = 10;
 
-   error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, ez_free_caq) != 0)
+   error_check (ezmalloc (caq_alloc, &alloc_arg,
+      caq_cb,
+      (do_free_t) ez_free_caq) != 0)
       return -1;
 
 
