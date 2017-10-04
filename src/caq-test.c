@@ -61,6 +61,14 @@ static void caq_generate (void *restrict arg_) {
    *arg = random_range_java (-10, 10);
 }
 
+__attribute__ ((nonnull (1), nothrow))
+static void caq_generates (void *restrict arg_, size_t n) {
+   int *restrict arg = (int *restrict) arg_;
+   size_t i;
+   for (i = 0; i != n; i++)
+      arg[i] = random_range_java (-10, 10);
+}
+
 #ifdef TEST
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static bool caq_isfull (void const *restrict arg_) {
