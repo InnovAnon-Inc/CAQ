@@ -61,6 +61,7 @@ static void caq_generate (void *restrict arg_) {
    *arg = random_range_java (-10, 10);
 }
 
+#ifdef TEST
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static bool caq_isfull (void const *restrict arg_) {
    caq_t const *restrict arg = (caq_t const *restrict) arg_;
@@ -72,6 +73,7 @@ static bool caq_isempty (void const *restrict arg_) {
    caq_t const *restrict arg = (caq_t const *restrict) arg_;
    return isempty (arg);
 }
+#endif
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
@@ -86,7 +88,8 @@ static int caq_add_test (void *restrict arg_) {
    return 0;
 #endif
    int tmp;
-   return add_test (arg_, &tmp, caq_isfull, caq_generate, enqueue);
+   return add_test (arg_, &tmp,
+      (isfull_t) isfull, caq_generate, (add_t) enqueue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -101,7 +104,8 @@ static int caq_remove_test (void *restrict arg_) {
    return 0;
 #endif
    int tmp;
-   return remove_test (arg_, &tmp, caq_isempty, dequeue);
+   return remove_test (arg_, &tmp,
+      (isempty_t) isempty, (remove_t) dequeue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -123,7 +127,8 @@ static int caq_adds_test (void *restrict arg_) {
 #endif
    int tmps[10];
    return adds_test (arg_, tmps, ARRSZ (tmps),
-      remaining_space_caq, caq_generate, enqueues);
+      (remaining_space_t) remaining_space_caq,
+      caq_generate, (adds_t) enqueues);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -142,7 +147,8 @@ static int caq_removes_test (void *restrict arg_) {
    return 0;
 #endif
    int tmps[10];
-   return removes_test (arg_, tmps, ARRSZ (tmps), used_space_caq, dequeues);
+   return removes_test (arg_, tmps, ARRSZ (tmps),
+      (used_space_t) used_space_caq, (removes_t) dequeues);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
