@@ -55,8 +55,15 @@ static void *caq_alloc (void const *restrict arg_) {
    return ez_alloc_caq (arg->esz, arg->n);
 }
 
+__attribute__ ((nonnull (1), nothrow))
+static void caq_generate (void *restrict arg_) {
+   int *restrict arg = (int *restrict) arg_;
+   *arg = random_range_java (-10, 10);
+}
+
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
+#ifdef TEST
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
    if (isfull (arg)) return TEST_NA;
@@ -65,10 +72,14 @@ static int caq_add_test (void *restrict arg_) {
    enqueue (arg, &tmp);
    dumpq (arg);
    return 0;
+#endif
+   int tmp;
+   return add_test (arg_, &tmp, isfull, caq_generate, enqueue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
+#ifdef TEST
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmp;
    if (isempty (arg)) return TEST_NA;
@@ -76,10 +87,14 @@ static int caq_remove_test (void *restrict arg_) {
    /*free tmp*/
    dumpq (arg);
    return 0;
+#endif
+   int tmp;
+   return remove_test (arg_, &tmp, isempty, dequeue);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_adds_test (void *restrict arg_) {
+#ifdef TEST
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t i;
@@ -93,10 +108,15 @@ static int caq_adds_test (void *restrict arg_) {
    enqueues (arg, tmps, n);
    dumpq (arg);
    return 0;
+#endif
+   int tmps[10];
+   return adds_test (arg_, tmps, ARRSZ (tmps),
+      remaining_space_caq, caq_generate, enqueues);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_removes_test (void *restrict arg_) {
+#ifdef TEST
    caq_t *restrict arg = (caq_t *restrict) arg_;
    int tmps[10];
    size_t n;
@@ -108,6 +128,9 @@ static int caq_removes_test (void *restrict arg_) {
    /* free tmps */
    dumpq (arg);
    return 0;
+#endif
+   int tmps[10];
+   return removes_test (arg_, tmps, ARRSZ (tmps), used_space_caq, dequeues);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
@@ -122,8 +145,8 @@ static int caq_cb (void *restrict arg) {
    /*assert (ARRSZ (tests) == 2);*/
 
 
-   /*error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)*/
-   random_ops2 (arg, tests, ARRSZ (tests));
+   error_check (random_ops (arg, tests, ARRSZ (tests), 100) != 0)
+   /*random_ops2 (arg, tests, ARRSZ (tests));*/
       return -1;
 
    /*return 0;*/
@@ -272,6 +295,9 @@ int main(void) {
 
    alloc_arg.esz = sizeof (int);
    alloc_arg.n   = 10;
+
+   error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
+      return -1;
 
    error_check (ezmalloc (caq_alloc, &alloc_arg, caq_cb, caq_free) != 0)
       return -1;

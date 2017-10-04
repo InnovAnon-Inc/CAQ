@@ -25,7 +25,7 @@ __attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int alloc_queue (
    caq_t *restrict q,
    size_t esz, size_t n) {
-   error_check (alloc_array (&(q->array), esz, n + 1) != 0) return -1;
+   error_check (alloc_array (&(q->array), esz, n + 1) =!= 0) return -1;
    q->head = 0;
    q->tail = 0;
    return 0;
@@ -66,7 +66,7 @@ void dequeue (caq_t *restrict q, void *restrict e) {
    get_array (&(q->array), q->head, e);
    q->head = (q->head + 1) % q->array.n;
    assert (chk_rem  + 1 == remaining_space_caq (q));
-   assert (chk_used - 1== used_space_caq      (q));
+   assert (chk_used - 1 == used_space_caq      (q));
 }
 
 __attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
@@ -273,16 +273,16 @@ void enqueues (caq_t *restrict q, void const *restrict e, size_t n) {
 #endif
    size_t diff = q->array.n - q->tail;
    array_t tmp;
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
-   init_array (&tmp, e, q->array.esz, n);
-	#pragma GCC diagnostic pop
    assert (n == 0 || ! isfull (q));
    assert (remaining_space_caq (q) >= n);
    if (q->head > q->tail || n <= diff)
       sets_array (&(q->array), q->tail, e, n);
    else {
       sets_array (&(q->array), q->tail, e, diff);
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+      init_array (&tmp, e, q->array.esz, n);
+	#pragma GCC diagnostic pop
       sets_array (&(q->array), (size_t) 0, /*e+diff*/index_array (&tmp, diff), n - diff);
    }
    /*
@@ -311,16 +311,16 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
 #endif
    size_t diff = q->array.n - q->head;
    array_t tmp;
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
-   init_array (&tmp, e, q->array.esz, n);
-	#pragma GCC diagnostic pop
    assert (n == 0 || ! isempty (q));
    assert (used_space_caq (q) >= n);
    if (q->tail > q->head || n <= diff)
       sets_array (&(q->array), q->head, e, n);
    else {
       sets_array (&(q->array), q->head, e, diff);
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+      init_array (&tmp, e, q->array.esz, n);
+	#pragma GCC diagnostic pop
       sets_array (&(q->array), (size_t) 0, /*e + diff*/index_array (&tmp, diff), n - diff);
    }
    q->head = (q->head + n) % q->array.n;
