@@ -62,14 +62,14 @@ static void caq_generate (void *restrict arg_) {
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static bool caq_isfull (void *restrict arg_) {
-   caq_t *restrict arg = (caq_t *restrict) arg_;
+static bool caq_isfull (void const *restrict arg_) {
+   caq_t const *restrict arg = (caq_t const *restrict) arg_;
    return isfull (arg);
 }
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
-static bool caq_isempty (void *restrict arg_) {
-   caq_t *restrict arg = (caq_t *restrict) arg_;
+static bool caq_isempty (void const *restrict arg_) {
+   caq_t const *restrict arg = (caq_t const *restrict) arg_;
    return isempty (arg);
 }
 
