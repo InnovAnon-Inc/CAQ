@@ -114,7 +114,7 @@ static int caq_cb (void *restrict arg) {
    /*random_ops2 (arg, tests, ARRSZ (tests));*/
       return -1;
 
-   /*return 0;*/
+   return 0;
 }
 
 __attribute__ ((nonnull (1), nothrow))
@@ -263,7 +263,7 @@ int main(void) {
 
    error_check (ezmalloc (caq_alloc, &alloc_arg,
       caq_cb,
-      /*(do_free_t) ez_free_caq*/ caq_free) != 0)
+      (do_free_t) ez_free_caq) != 0)
       return -1;
 
 
