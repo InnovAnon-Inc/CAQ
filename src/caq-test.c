@@ -52,10 +52,10 @@ static void generates_int (void *restrict arg_, size_t n) {
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_add_test (void *restrict arg_) {
    int tmp;
-   int err;
-   error_check (add_test (arg_, &tmp,
-      (isfull_t) isfull, generate_int, (add_t) enqueue) != 0)
-      return -1;
+   int err = add_test (arg_, &tmp,
+      (isfull_t) isfull, generate_int, (add_t) enqueue);
+   if (err == TEST_NA) return 0;
+   error_check (err != 0) return -1;
    fprintf (stderr, "caq_add_test (), tmp:%d\n", tmp);
    dumpq ((caq_t *restrict) arg_);
    return 0;
@@ -64,9 +64,10 @@ static int caq_add_test (void *restrict arg_) {
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int caq_remove_test (void *restrict arg_) {
    int tmp;
-   error_check (remove_test (arg_, &tmp,
-      (isempty_t) isempty, (remove_t) dequeue) != 0)
-      return -1;
+   int err = remove_test (arg_, &tmp,
+      (isempty_t) isempty, (remove_t) dequeue);
+   if (err == TEST_NA) return 0;
+   error_check (err != 0) return -1;
    fprintf (stderr, "caq_remove_test (), tmp:%d\n", tmp);
    dumpq ((caq_t *restrict) arg_);
    return 0;
