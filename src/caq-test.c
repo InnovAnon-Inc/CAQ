@@ -127,7 +127,7 @@ int main(void) {
 
    error_check (ezmalloc (caq_alloc, &alloc_arg,
       caq_cb,
-      (do_free_t) ez_free_caq) != 0)
+      (free_t) ez_free_caq) != 0)
       return EXIT_FAILURE;
 
    return EXIT_SUCCESS;

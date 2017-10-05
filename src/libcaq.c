@@ -314,14 +314,14 @@ void dequeues (caq_t *restrict q, void *restrict e, size_t n) {
    assert (n == 0 || ! isempty (q));
    assert (used_space_caq (q) >= n);
    if (q->tail > q->head || n <= diff)
-      sets_array (&(q->array), q->head, e, n);
+      gets_array (&(q->array), q->head, e, n);
    else {
-      sets_array (&(q->array), q->head, e, diff);
+      gets_array (&(q->array), q->head, e, diff);
 	#pragma GCC diagnostic push
 	#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
       init_array (&tmp, e, q->array.esz, n);
 	#pragma GCC diagnostic pop
-      sets_array (&(q->array), (size_t) 0, /*e + diff*/index_array (&tmp, diff), n - diff);
+      gets_array (&(q->array), (size_t) 0, /*e + diff*/index_array (&tmp, diff), n - diff);
    }
    q->head = (q->head + n) % q->array.n;
    assert (chk_rem  + n == remaining_space_caq (q));
@@ -333,12 +333,14 @@ void frees_caq (caq_t const *restrict caq, free_t f) {
    array_t tmp;
    if (caq->head <= caq->tail) {
       init_array2 (&tmp, &(caq->array), caq->head,
-         caq->tail - caq->head);
+         caq->head - 1 + (caq->tail - caq->head));
       frees_array (&tmp, f);
    } else {
-      init_array2 (&tmp, &(caq->array), caq->head, caq->array.n - caq->head);
+      init_array2 (&tmp, &(caq->array), caq->head,
+         caq->head - 1 + (caq->array.n - caq->head));
       frees_array (&tmp, f);
-      init_array2 (&tmp, &(caq->array), (size_t) 0, caq->tail);
+      init_array2 (&tmp, &(caq->array), (size_t) 0,
+         caq->tail - 1);
       frees_array (&tmp, f);
    }
 }
