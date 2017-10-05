@@ -27,11 +27,11 @@ static void dumpq(caq_t const *restrict q) {
 typedef struct {
    size_t esz;
    size_t n;
-} alloc_t;
+} caq_alloc_t;
 
 __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static void *caq_alloc (void const *restrict arg_) {
-   alloc_t const *restrict arg = (alloc_t const *restrict) arg_;
+   caq_alloc_t const *restrict arg = (caq_alloc_t const *restrict) arg_;
    return ez_alloc_caq (arg->esz, arg->n);
 }
 
@@ -117,7 +117,7 @@ static int caq_cb (void *restrict arg) {
 
 int main(void) {
    time_t t;
-   alloc_t alloc_arg;
+   caq_alloc_t alloc_arg;
 
    t = time (NULL);
    srand ((unsigned int) t);
