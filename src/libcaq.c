@@ -150,21 +150,24 @@ size_t caqsz2 (caq_t const *restrict caq) {
 
 __attribute__ ((nothrow, warn_unused_result))
 caq_t *ez_alloc_caq (size_t esz, size_t maxn) {
-   void *restrict *restrict combined[2];
-	size_t eszs[2];
-	caq_t *restrict caq;
-	void *restrict data;
+      void *restrict *restrict combined[2];
+      size_t eszs[2];
+      void  *restrict caq;
+      void  *restrict data;
+      /*caq_t *restrict caq;*/
 
-	eszs[0] = sizeof (caq_t);
-	eszs[1] = datasz  (esz, maxn + 1);
-   combined[0] = (void *restrict *restrict) &caq;
-   combined[1] = (void *restrict *restrict) &data;
-	error_check (mmalloc2 (combined, eszs,
-		eszs[0] + eszs[1], ARRSZ (eszs)) != 0)
-		return NULL;
+      eszs[0] = sizeof (caq_t);
+      eszs[1] = datasz (esz, maxn + 1);
+      combined[0] = &caq;
+      combined[1] = &data;
+      /*combined[0] = (void *restrict *restrict) &caq;
+        combined[1] = (void *restrict *restrict) &data;*/
+      error_check (mmalloc2 (combined, eszs,
+      	eszs[0] + eszs[1], ARRSZ (eszs)) != 0)
+      	return NULL;
 
-   init_queue (caq, data, esz, maxn);
-	return caq;
+      init_queue ((caq_t *restrict) caq, data, esz, maxn);
+      return (caq_t *restrict) caq;
    /*return (caq_t *restrict) *(combined[0]);*/
    /*
    void *restrict tmp;
