@@ -14,6 +14,6 @@ lib_LTLIBRARIES = libcaq.la
 libcaq_la_LIBADD = $(LIBCAQ_LIBADD)
 include_HEADERS = caq.h
 
-include ../StD/src/Makefile-LIBADD.inc
+include ../../StD/src/Makefile-LIBADD.inc
 bin_PROGRAMS = caq-test
 caq_test_LDADD = libcaq.la $(LIBCAQ_LIBADD) -lsimon $(LIBSIMON_LIBADD)
