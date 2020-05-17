@@ -8,34 +8,31 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
  Makefile
  src/Makefile
+ src/libcaq.pc
+ src/caq-test.pc
 ])
+
+PKG_PROG_PKG_CONFIG
 
 AC_ARG_ENABLE([use-submodules],
     AS_HELP_STRING([--enable-use-submodules], [Enable use submodules]))
 AM_CONDITIONAL([USE_SUBMODULES], [test x"$enable_use_submodules" = "xyes"])
 
 AC_CONFIG_MACRO_DIR([m4])
-#AC_CONFIG_SUBDIRS([glitter Array])
 
 AC_CHECK_HEADERS([stdio.h stdlib.h string.h sys/types.h])
-AC_CHECK_HEADERS([array.h])
-AC_CHECK_HEADERS([glitter.h])
+#AC_CHECK_HEADERS([array.h])
+#AC_CHECK_HEADERS([glitter.h])
 
 #AC_CHECK_LIB([stdlib],[malloc,free])
-AC_CHECK_LIB([array],[init_array,free_array])
-AC_CHECK_LIB([array],[get_array,set_array,index_array])
+#AC_CHECK_LIB([array],[init_array,free_array])
+#AC_CHECK_LIB([array],[get_array,set_array,index_array])
 #AC_CHECK_LIB([array],[gets_array,sets_array,index_array])
 
-#srcdir = @srcdir@
-#LIBCAQ_LIBADD="`PATH=$(srcdir)src:$PATH libcaq_config --libs`"
-LIBCAQ_LIBADD="`PATH=src:$PATH libcaq_config --libs`"
-AC_SUBST(LIBCAQ_LIBADD)
-
-#CAQ_TEST_LIBADD="libcaq.la `PATH=$(srcdir)src:$PATH caq_test_config --libs`"
-#CAQ_TEST_LIBADD="`PATH=$(srcdir)src:$PATH caq_test_config --libs`"
-CAQ_TEST_LIBADD="`PATH=src:$PATH caq_test_config --libs`"
-AC_SUBST(CAQ_TEST_LIBADD)
+PKG_CHECK_MODULES([GLITTER],[glitter],,)
+PKG_CHECK_MODULES([MMALLOC],[mmalloc],,)
 
 INNOVANON_WARNINGS([])
 
 AC_OUTPUT
+

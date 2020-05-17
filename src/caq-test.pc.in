@@ -1,0 +1,15 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+caq_utility=caq-test
+
+Name: @PACKAGE_NAME@
+Description: caq library
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lcaq
+Cflags: -I${includedir}
+Requires:
+Requires.private: -lcaq -lmmalloc -larray -lsimon
+
