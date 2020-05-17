@@ -10,6 +10,8 @@ Description: caq library
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lcaq
 Cflags: -I${includedir}
-Requires: glitter -larray
-Requires.private: -lmmalloc
+#Requires: glitter -larray
+#Requires.private: -lmmalloc
+Requires: glitter libarray
+Requires.private: libmmalloc
 

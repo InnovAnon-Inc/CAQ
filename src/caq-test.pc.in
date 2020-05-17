@@ -11,5 +11,6 @@ Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lcaq
 Cflags: -I${includedir}
 Requires:
-Requires.private: -lcaq -larray -lsimon
+#Requires.private: -lcaq -larray -lsimon
+Requires.private: libcaq libarray libsimon
 
