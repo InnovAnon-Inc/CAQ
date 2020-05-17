@@ -30,9 +30,9 @@ AC_CHECK_HEADERS([stdio.h stdlib.h string.h sys/types.h])
 #AC_CHECK_LIB([array],[gets_array,sets_array,index_array])
 
 PKG_CHECK_MODULES([GLITTER],[glitter],,)
-PKG_CHECK_MODULES([MMALLOC],[mmalloc],,)
-PKG_CHECK_MODULES([ARRAY],[array],,)
-PKG_CHECK_MODULES([SIMON],[simon],,)
+PKG_CHECK_MODULES([MMALLOC],[libmmalloc],,)
+PKG_CHECK_MODULES([ARRAY],[libarray],,)
+PKG_CHECK_MODULES([SIMON],[libsimon],,)
 
 INNOVANON_WARNINGS([])
 
