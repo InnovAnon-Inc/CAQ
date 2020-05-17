@@ -1,7 +1,7 @@
 AM_CPPFLAGS = -D__STDC_INT64__
 
 lib_LTLIBRARIES =
-bin_PROGRAM     =
+bin_PROGRAMS    =
 
 lib_LTLIBRARIES += libcaq.la
 libcaq_la_CPPFLAGS = $(MMALLOC_CFLAGS)
