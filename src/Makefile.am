@@ -4,8 +4,8 @@ lib_LTLIBRARIES =
 bin_PROGRAMS    =
 
 lib_LTLIBRARIES += libcaq.la
-libcaq_la_CPPFLAGS = $(MMALLOC_CFLAGS)
-libcaq_la_LIBADD   = $(MMALLOC_LIBS)
+libcaq_la_CPPFLAGS = $(GLITTER_CFLAGS) $(MMALLOC_CFLAGS) $(ARRAY_CFLAGS)
+libcaq_la_LIBADD   = $(GLITTER_LIBS)   $(MMALLOC_LIBS)   $(ARRAY_LIBS)
 include_HEADERS = caq.h
 
 bin_PROGRAMS += caq-test
