@@ -1,7 +1,0 @@
-#! /bin/bash
-set -eu
-[ $# -eq 1 ]
-[ $1 == --libs ]
-#echo `libcaq_config --libs` -larray `libarray_config --libs` -lsimon `libsimon_config --libs`
-echo -lcaq `libcaq_config --libs` -larray `libarray_config --libs` -lsimon `libsimon_config --libs`
-
